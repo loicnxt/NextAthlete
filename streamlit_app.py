@@ -1,383 +1,158 @@
 import streamlit as st
-import json
-from datetime import datetime
 
 # Configuration de la page
-st.set_page_config(
-    page_title="COMPETITION READY - Next Athlete",
-    page_icon="🔥",
-    layout="wide",
-    initial_sidebar_state="collapsed"
-)
+st.set_page_config(page_title="Competition Ready Checklist", page_icon="🏃‍♂️", layout="centered")
 
-# CSS personnalisé
+# Style CSS personnalisé pour coller au design "Elite"
 st.markdown("""
-<style>
-    body {
-        background-color: #f8fafc;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
+    <style>
     .main {
-        max-width: 600px;
-        margin: 0 auto;
+        background-color: #f8fafc;
     }
-    .header-title {
-        font-size: 2.5rem;
-        font-weight: 900;
+    .stHeader {
+        font-family: 'Inter', sans-serif;
+    }
+    .phase-title {
         color: #dc2626;
-        text-align: center;
+        font-weight: 900;
+        letter-spacing: -0.05em;
         font-style: italic;
-        letter-spacing: -1px;
-        margin-bottom: 0.5rem;
     }
-    .header-subtitle {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: #9ca3af;
-        text-align: center;
+    .time-badge {
+        background-color: #fee2e2;
+        color: #dc2626;
+        padding: 2px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.15em;
     }
-</style>
-""", unsafe_allow_html=True)
+    .pro-tip-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 20px;
+        border: 1px solid #f1f5f9;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-# Initialisation de la session
-if 'checked_items' not in st.session_state:
-    st.session_state.checked_items = {}
-if 'active_tab' not in st.session_state:
-    st.session_state.active_tab = 0
-if 'expanded_sections' not in st.session_state:
-    st.session_state.expanded_sections = {"0-0": True, "1-0": True, "2-0": True, "3-0": True}
-if 'open_details' not in st.session_state:
-    st.session_state.open_details = {}
-
-# Données des phases
+# Données de l'application
 sections = [
     {
         "title": "Phase 1 : J-14 à J-7",
         "subtitle": "L'Affûtage & La Fondation",
-        "icon": "🏃",
-        "proTip": "Le but ici est la fraîcheur. Ne cherche plus à progresser physiquement, mais à arriver reposé et ultra-précis.",
-        "categories": [
-            {
-                "name": "Entraînement & Physio",
-          items: [
-                    {
-                        "id": "taper",
-                        "label": "Phase de Taper",
-                        "time": "J-14",
-                        "desc": "Réduction drastique du volume d'entraînement.",
-                        "details": "Réduction du volume global. On maintient l'intensité mais on diminue la durée des séances pour laisser le corps surcompenser."
-                    },
-                    {
-                        "id": "massage",
-                        "label": "Soins des tissus mous",
-                        "time": "J-10 Max",
-                        "desc": "Dernier massage profond (Deep Tissue).",
-                        "details": "À faire impérativement avant J-10. Après cette limite, le risque de courbatures ou de perte de tonus musculaire (effet 'jambes molles') est trop important."
-},
-            {
-                "id": "sleep_bank",
-                "label": "Sommeil 'Banking'",
-                "time": "J-14 à J-0",
-                "desc": "Cherche à 'stocker' du sommeil.",
-                "details": "Augmenter le temps de sommeil (9h-10h) deux semaines avant. Améliore les temps de réaction et la précision sur les obstacles techniques."
-            }
-                ]
-            }
-        ]
+        "pro_tip": "Le but ici est la fraîcheur. Ne cherche plus à progresser physiquement, mais à arriver reposé et ultra-précis.",
+        "categories": {
+            "Entraînement & Physio": [
+                {"id": "taper", "label": "Phase de Taper", "time": "J-14", "details": "Réduction du volume global. On maintient l'intensité mais on diminue la durée des séances pour laisser le corps surcompenser."},
+                {"id": "massage", "label": "Soins des tissus mous", "time": "J-10 Max", "details": "À faire impérativement avant J-10. Après cette limite, le risque de courbatures ou de perte de tonus musculaire est trop important."}
+            ],
+            "Nutrition & Hygiène": [
+                {"id": "sleep_bank", "label": "Sommeil 'Banking'", "time": "J-14 à J-0", "details": "Augmenter le temps de sommeil (9h-10h) deux semaines avant. Améliore les temps de réaction et la précision."}
+            ]
+        }
     },
     {
         "title": "Phase 2 : J-6 à J-1",
         "subtitle": "La Semaine Critique",
-        "icon": "⚡",
-        "proTip": "Le sevrage de caféine est difficile les 3 premiers jours, mais le boost le jour J sera ton plus grand avantage nerveux.",
-        "categories": [
-            {
-                "name": "Nutrition & Hydratation",
-                "items": [
-                    {
-                        "id": "carb_load",
-                        "label": "Augmentation Glucidique",
-                        "time": "J-1",
-                        "desc": "Cible : 4-5g de glucides / kg de PDC.",
-                        "details": "L'objectif est de maximiser les stocks de glycogène musculaire et hépatique pour avoir un réservoir d'énergie plein."
-                    },
-                    {
-                        "id": "residues",
-                        "label": "Régime sans résidus",
-                        "time": "J-2",
-                        "desc": "Élimine les fibres (légumes crus, grains entiers).",
-                        "details": "Vider le tractus intestinal pour éviter les troubles digestifs. Gain potentiel de 500g à 1kg sur la balance (poids mort intestinal)."
-                    },
-                    {
-                        "id": "sodium",
-                        "label": "Hyperhydratation sodée",
-                        "time": "J-3 à J-1",
-                        "desc": "Eau riche en sodium ou électrolytes.",
-                        "details": "Le sodium aide à retenir le fluide dans le plasma sanguin (expansion du volume plasmatique), crucial pour la thermorégulation et le débit cardiaque."
-                    },
-                    {
-                        "id": "nitrates_load",
-                        "label": "Charge Jus de Betterave",
-                        "time": "J-6 à J-1",
-                        "desc": "Saturer le corps en nitrates (1-2 shots/jour).",
-                        "details": "70-140 ml (300-600mg nitrates). Vasodilatateur puissant, améliore l'économie de l'effort et l'utilisation de l'ATP Pcr."
-                    }
-                ]
-            },
-            {
-                "name": "Suppléments & Logistique",
-                "items": [
-                    {
-                        "id": "cafeine_reset",
-                        "label": "Arrêt de la Caféine",
-                        "time": "J-7 à J-2",
-                        "desc": "'Caffeine reset' pour la sensibilité.",
-                        "details": "Se sevrer une semaine avant pour resensibiliser les récepteurs à l'adénosine. Le boost du jour J sera explosif."
-                    },
-                    {
-                        "id": "creatine",
-                        "label": "Maintien Créatine",
-                        "time": "Quotidien",
-                        "desc": "Maintenir la dose de croisière (3-5g).",
-                        "details": "Si tu en prends déjà, continue. Ne commence surtout pas maintenant pour éviter une rétention d'eau imprévue."
-                    },
-                    {
-                        "id": "gear_check",
-                        "label": "Check-up Matériel",
-                        "time": "J-2",
-                        "desc": "Vérification complète : chaussures, straps, magnésie.",
-                        "details": "Rien de nouveau le jour de la compétition. Teste tes straps et ta nutrition une dernière fois."
-                    }
-                ]
-            }
-        ]
+        "pro_tip": "Le sevrage de caféine est difficile les 3 premiers jours, mais le boost le jour J sera ton plus grand avantage nerveux.",
+        "categories": {
+            "Nutrition & Hydratation": [
+                {"id": "carb_load", "label": "Augmentation Glucidique", "time": "J-1", "details": "Cible : 4-5g de glucides / kg de PDC. L'objectif est de maximiser les stocks de glycogène."},
+                {"id": "residues", "label": "Régime sans résidus", "time": "J-2", "details": "Élimine les fibres pour vider le tractus intestinal. Gain potentiel de 500g à 1kg de poids mort."},
+                {"id": "sodium", "label": "Hyperhydratation sodée", "time": "J-3 à J-1", "details": "Le sodium aide à retenir le fluide dans le plasma sanguin, crucial pour la thermorégulation."},
+                {"id": "nitrates_load", "label": "Charge Jus de Betterave", "time": "J-6 à J-1", "details": "1-2 shots/jour (300-600mg nitrates). Améliore l'économie de l'effort et l'utilisation de l'ATP Pcr."}
+            ],
+            "Suppléments & Logistique": [
+                {"id": "cafeine_reset", "label": "Arrêt de la Caféine", "time": "J-7 à J-2", "details": "Se sevrer une semaine avant pour resensibiliser les récepteurs. Le boost du jour J sera explosif."},
+                {"id": "creatine", "label": "Maintien Créatine", "time": "Quotidien", "details": "Maintenir la dose de croisière (3-5g). Ne commence surtout pas maintenant."},
+                {"id": "gear_check", "label": "Check-up Matériel", "time": "J-2", "details": "Rien de nouveau le jour J. Vérifie tes chaussures, tes straps et ta nutrition."}
+            ]
+        }
     },
     {
         "title": "Phase 3 : Le Jour J",
         "subtitle": "Avant l'épreuve",
-        "icon": "🔥",
-        "proTip": "Respecte scrupuleusement le timing du dernier shot de betterave. L'effet de pic est une fenêtre physiologique précise.",
-        "categories": [
-            {
-                "name": "Chronologie Nutritionnelle",
-                "items": [
-                    {
-                        "id": "pre_meal",
-                        "label": "Repas Pré-compétition",
-                        "time": "H-4 à H-3",
-                        "desc": "Glucides ++, pauvre en lipides/fibres.",
-                        "details": "Exemple : Riz blanc, compote, blanc de poulet ou protéine en poudre. Facile à digérer, énergie rapide."
-                    },
-                    {
-                        "id": "nitrate_final",
-                        "label": "Nitrate Shot Final",
-                        "time": "H-2.5",
-                        "desc": "Dernier shot de betterave concentré.",
-                        "details": "Le pic de nitrates plasmatiques survient 2 à 3h après l'ingestion. C'est le moment clé pour l'oxyde nitrique."
-                    },
-                    {
-                        "id": "cafeine_final",
-                        "label": "Caféine Elite",
-                        "time": "H-1",
-                        "desc": "Dosage : 3 mg / kg de poids de corps.",
-                        "details": "Effet : Réduction de la perception de l'effort (RPE) et mobilisation des acides gras. À prendre avant le run le plus important."
-                    },
-                    {
-                        "id": "tampon",
-                        "label": "Tampon Acide",
-                        "time": "H-1",
-                        "desc": "Bicarbonate ou Beta-Alanine.",
-                        "details": "Si l'épreuve est très lactique (1-8 min). Attention : peut causer des troubles gastriques majeurs. À tester impérativement avant."
-                    }
-                ]
-            },
-            {
-                "name": "Échauffement (Warm-up)",
-                "items": [
-                    {
-                        "id": "racs",
-                        "label": "RACs Full-Body",
-                        "time": "H-30 min",
-                        "desc": "Mobilisation articulaire complète.",
-                        "details": "Réveiller chaque articulation sans créer de fatigue nerveuse."
-                    },
-                    {
-                        "id": "pap_cap",
-                        "label": "PAP Capsulaire",
-                        "time": "H-15 min",
-                        "desc": "Effort max sur contraction PAILs.",
-                        "details": "Flexion d'épaule et Rotation externe d'épaule spécifique pour préparer le grip et les suspensions."
-                    },
-                    {
-                        "id": "plio",
-                        "label": "Pliométrie extensive",
-                        "time": "H-10 min",
-                        "desc": "Volume bas sur sauts intensité moyenne.",
-                        "details": "Réveiller les tendons sans entamer les réserves d'énergie."
-                    },
-                    {
-                        "id": "pap_muscular",
-                        "label": "PAP Musculaire & Sprints",
-                        "time": "H-5 min",
-                        "desc": "Intensité max, volume très bas.",
-                        "details": "Quelques sauts max ou sprints courts pour la potentiation nerveuse finale."
-                    },
-                    {
-                        "id": "thermal",
-                        "label": "Veste thermique",
-                        "time": "Départ",
-                        "desc": "Garder le corps au chaud jusqu'au bout.",
-                        "details": "Ne laisse pas tes muscles se refroidir pendant l'attente sur la ligne de départ."
-                    }
-                ]
-            }
-        ]
+        "pro_tip": "Respecte scrupuleusement le timing du dernier shot de betterave. L'effet de pic est une fenêtre physiologique précise.",
+        "categories": {
+            "Chronologie Nutritionnelle": [
+                {"id": "pre_meal", "label": "Repas Pré-compétition", "time": "H-4 à H-3", "details": "Riz blanc, compote, blanc de poulet. Facile à digérer, énergie rapide."},
+                {"id": "nitrate_final", "label": "Nitrate Shot Final", "time": "H-2.5", "details": "Le pic de nitrates plasmatiques survient 2 à 3h après l'ingestion."},
+                {"id": "cafeine_final", "label": "Caféine Elite", "time": "H-1", "details": "Dosage : 3 mg / kg de poids de corps. Réduction de la perception de l'effort (RPE)."},
+                {"id": "tampon", "label": "Tampon Acide", "time": "H-1", "details": "Bicarbonate ou Beta-Alanine si épreuve lactique. Attention aux troubles gastriques."}
+            ],
+            "Échauffement (Warm-up)": [
+                {"id": "racs", "label": "RACs Full-Body", "time": "H-30 min", "details": "Mobilisation articulaire complète sans créer de fatigue nerveuse."},
+                {"id": "pap_cap", "label": "PAP Capsulaire", "time": "H-15 min", "details": "Contraction PAILs épaule spécifique pour préparer le grip."},
+                {"id": "plio", "label": "Pliométrie extensive", "time": "H-10 min", "details": "Sauts intensité moyenne pour réveiller les tendons."},
+                {"id": "pap_muscular", "label": "PAP Musculaire", "time": "H-5 min", "details": "Intensité max, volume bas (sprints/sauts) pour la potentiation nerveuse."},
+                {"id": "thermal", "label": "Veste thermique", "time": "Départ", "details": "Garde tes muscles au chaud jusqu'à la dernière seconde."}
+            ]
+        }
     },
     {
         "title": "Phase 4 : En Course",
         "subtitle": "Gestion & Entre-runs",
-        "icon": "🧠",
-        "proTip": "Le 'Mouth Rinsing' (rinçage de bouche) trompe ton cerveau en lui faisant croire que de l'énergie arrive, sans peser sur ton estomac.",
-        "categories": [
-            {
-                "name": "Protocole Entre 2 Runs",
-                "items": [
-                    {
-                        "id": "active_recov",
-                        "label": "Récupération Active",
-                        "time": "H + 2 min",
-                        "desc": "Marche active. Ne t'assois pas.",
-                        "details": "Respiration nasale profonde pour faire redescendre le rythme cardiaque et évacuer les déchets métaboliques."
-                    },
-                    {
-                        "id": "hydro_electro",
-                        "label": "Hydratation Sodée",
-                        "time": "H + 5 min",
-                        "desc": "200-300ml d'eau avec électrolytes.",
-                        "details": "Une eau type Vichy Célestins est parfaite pour tamponner l'acidité produite par le premier run."
-                    },
-                    {
-                        "id": "refuel",
-                        "label": "Apport Énergie",
-                        "time": "H + 10 min",
-                        "desc": "Demi-banane ou miel si nécessaire.",
-                        "details": "Si tu te sens bien, ne mange rien de solide. Le sang doit rester dans tes muscles, pas dans ton estomac."
-                    },
-                    {
-                        "id": "mouth_rinse",
-                        "label": "Relance & Rinçage",
-                        "time": "H - 5 min",
-                        "desc": "Rinçage de bouche sucré (recracher).",
-                        "details": "Dernière relance : petits sauts et rotations articulaires pour préparer le second run."
-                    }
-                ]
-            },
-            {
-                "name": "Mental In-Game",
-                "items": [
-                    {
-                        "id": "self_talk",
-                        "label": "Self-Talk Positif",
-                        "time": "Pendant",
-                        "desc": "Dialogue interne instructif.",
-                        "details": "Focus sur les consignes techniques et l'instant présent plutôt que sur le résultat final."
-                    }
-                ]
-            }
-        ]
+        "pro_tip": "Le 'Mouth Rinsing' trompe ton cerveau en lui faisant croire que de l'énergie arrive sans peser sur ton estomac.",
+        "categories": {
+            "Protocole Entre 2 Runs": [
+                {"id": "active_recov", "label": "Récupération Active", "time": "H + 2 min", "details": "Marche active et respiration nasale pour évacuer les déchets métaboliques."},
+                {"id": "hydro_electro", "label": "Hydratation Sodée", "time": "H + 5 min", "details": "Eau riche en sodium/bicarbonates (Vichy) pour tamponner l'acidité."},
+                {"id": "refuel", "label": "Apport Énergie", "time": "H + 10 min", "details": "Demi-banane ou miel seulement si nécessaire. Priorité au sang dans les muscles."},
+                {"id": "mouth_rinse", "label": "Relance & Rinçage", "time": "H - 5 min", "details": "Rinçage de bouche sucré (recracher). Relance nerveuse par petits sauts."}
+            ],
+            "Mental": [
+                {"id": "self_talk", "label": "Self-Talk Positif", "time": "Pendant", "details": "Dialogue interne instructif axé sur les consignes techniques."}
+            ]
+        }
     }
 ]
 
-# Fonction pour calculer la progression
-def calculate_progress(phase_idx):
-    phase = sections[phase_idx]
-    total = 0
-    checked = 0
-    for category in phase["categories"]:
-        for item in category["items"]:
-            total += 1
-            if st.session_state.checked_items.get(item["id"], False):
-                checked += 1
-    return int((checked / total) * 100) if total > 0 else 0
+# Header
+st.markdown('<h1 class="phase-title">COMPETITION READY.</h1>', unsafe_allow_html=True)
+st.write("CHECKLIST ELITE PREPARATION")
 
-# En-tête
-st.markdown('<div class="header-title">COMPETITION READY.</div>', unsafe_allow_html=True)
-st.markdown('<div class="header-subtitle">Checklist</div>', unsafe_allow_html=True)
+# Navigation par Onglets (Tabs)
+tabs = st.tabs([f"Phase {i+1}" for i in range(len(sections))])
+
+for i, tab in enumerate(tabs):
+    with tab:
+        current_phase = sections[i]
+        
+        # Titre de la phase
+        st.markdown(f"## {current_phase['title']}")
+        st.markdown(f"*{current_phase['subtitle']}*")
+        
+        # Barre de progression fictive par phase
+        progress = 0
+        
+        # Affichage des catégories
+        for cat_name, items in current_phase['categories'].items():
+            st.markdown(f"### {cat_name}")
+            
+            for item in items:
+                col1, col2 = st.columns([0.8, 0.2])
+                
+                with col1:
+                    # Checkbox pour l'étape
+                    is_checked = st.checkbox(f"{item['label']}", key=item['id'])
+                    st.markdown(f"<span class='time-badge'>{item['time']}</span>", unsafe_allow_html=True)
+                
+                with col2:
+                    # Expander pour les détails (équivalent du bouton 'i')
+                    with st.expander("Détails"):
+                        st.write(item['details'])
+        
+        # Conseil Pro
+        st.markdown(f"""
+            <div class="pro-tip-box">
+                <p style="color:#dc2626; font-weight:900; font-size:0.7rem; text-transform:uppercase; margin-bottom:5px;">Conseil Pro Phase {i+1}</p>
+                <p style="font-size:0.85rem; font-weight:600; color:#334155;">"{current_phase['pro_tip']}"</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+# Footer
 st.markdown("---")
-
-# Navigation par onglets (Phases)
-col1, col2, col3, col4 = st.columns(4)
-
-phases_icons = ["🏃", "⚡", "🔥", "🧠"]
-phases_labels = ["Phase 1", "Phase 2", "Phase 3", "Phase 4"]
-
-with col1:
-    if st.button(f"{phases_icons[0]}\n{phases_labels[0]}", use_container_width=True, key="tab0"):
-        st.session_state.active_tab = 0
-
-with col2:
-    if st.button(f"{phases_icons[1]}\n{phases_labels[1]}", use_container_width=True, key="tab1"):
-        st.session_state.active_tab = 1
-
-with col3:
-    if st.button(f"{phases_icons[2]}\n{phases_labels[2]}", use_container_width=True, key="tab2"):
-        st.session_state.active_tab = 2
-
-with col4:
-    if st.button(f"{phases_icons[3]}\n{phases_labels[3]}", use_container_width=True, key="tab3"):
-        st.session_state.active_tab = 3
-
-st.markdown("---")
-
-# Phase actuelle
-active_phase = sections[st.session_state.active_tab]
-progress = calculate_progress(st.session_state.active_tab)
-
-col_title, col_progress = st.columns([3, 1])
-with col_title:
-    st.markdown(f"## {active_phase['title']}")
-    st.markdown(f"**{active_phase['subtitle']}**")
-
-with col_progress:
-    st.markdown(f"### {progress}%")
-
-st.progress(progress / 100, text=f"Progression: {progress}%")
-
-# Affichage des catégories et éléments
-for cat_idx, category in enumerate(active_phase["categories"]):
-    section_key = f"{st.session_state.active_tab}-{cat_idx}"
-
-    with st.expander(f"📋 {category['name']}", expanded=st.session_state.expanded_sections.get(section_key, True)):
-        for item in category["items"]:
-            is_checked = st.session_state.checked_items.get(item["id"], False)
-
-            col1, col2 = st.columns([10, 1])
-
-            with col1:
-                checked = st.checkbox(
-                    f"**[{item['time']}]** {item['label']}",
-                    value=is_checked,
-                    key=item["id"]
-                )
-                st.session_state.checked_items[item["id"]] = checked
-                st.caption(item["desc"])
-
-            with col2:
-                if st.button("ℹ️", key=f"info_{item['id']}", use_container_width=True):
-                    st.session_state.open_details[item["id"]] = not st.session_state.open_details.get(item["id"], False)
-
-            if st.session_state.open_details.get(item["id"], False):
-                st.info(item["details"])
-
-st.markdown("---")
-
-# Conseil Pro
-st.markdown(f"""
-### 💡 Conseil Pro Phase {st.session_state.active_tab + 1}
-> *"{active_phase['proTip']}"*
-""")
-
-st.markdown("---")
-st.markdown('<p style="text-align: center; color: #9ca3af; font-size: 0.8rem;">Next Athlete Performance System v1.0</p>', unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#94a3b8; font-size:0.7rem; font-weight:900; text-transform:uppercase; letter-spacing:0.2em;'>Next Athlete Performance System v1.0</p>", unsafe_allow_html=True)
