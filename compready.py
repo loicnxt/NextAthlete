@@ -1,254 +1,430 @@
 import streamlit as st
-import streamlit.components.v1 as components
 
-# Configuration de la page Streamlit
+# --- CONFIGURATION DE LA PAGE ---
 st.set_page_config(
-    page_title="Competition Ready Checklist",
-    page_icon="⚡",
+    page_title="Competition Ready",
+    page_icon="🔥",
     layout="centered",
     initial_sidebar_state="collapsed"
 )
 
-# Masquer les éléments d'interface par défaut de Streamlit pour un look application
+# --- CSS PERSONNALISÉ (DESIGN TAILWIND & BOUTONS CUSTOM) ---
 st.markdown("""
-    <style>
-        #MainMenu {visibility: hidden;}
-        footer {visibility: hidden;}
-        header {visibility: hidden;}
-        .block-container {padding: 0;}
-    </style>
+<style>
+    /* Fond global (Slate-50) */
+    .stApp {
+        background-color: #f8fafc;
+        color: #0f172a;
+        font-family: sans-serif;
+    }
+    
+    /* Titres */
+    h1 {
+        color: #dc2626 !important; /* Red-600 */
+        font-style: italic;
+        font-weight: 900 !important;
+        text-align: center;
+        letter-spacing: -0.05em !important;
+        padding-bottom: 0px;
+    }
+    
+    h2 {
+        color: #94a3b8 !important; /* Slate-400 */
+        font-size: 0.8rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.3em !important;
+        text-align: center;
+        font-weight: 700 !important;
+        padding-top: 0px;
+        margin-top: -10px !important;
+    }
+
+    h3 {
+        font-weight: 800 !important;
+        color: #1e293b !important;
+    }
+
+    /* Tabs personnalisés */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 10px;
+        background-color: rgba(255, 255, 255, 0.6);
+        padding: 10px;
+        border-radius: 16px;
+        border: 1px solid white;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        height: 50px;
+        white-space: pre-wrap;
+        background-color: transparent;
+        border-radius: 10px;
+        color: #cbd5e1;
+        font-weight: 700;
+        font-size: 12px;
+    }
+
+    .stTabs [aria-selected="true"] {
+        background-color: #ffffff !important;
+        color: #dc2626 !important;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Accordéons (Expanders) */
+    .streamlit-expanderHeader {
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid white;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #64748b; /* Slate-500 */
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    
+    .streamlit-expanderContent {
+        border: none;
+        padding-top: 5px;
+    }
+
+    /* Progress Bar */
+    .stProgress > div > div > div > div {
+        background-color: #dc2626;
+    }
+    
+    /* Tableaux */
+    table {
+        font-size: 12px;
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    th {
+        text-align: left;
+        padding: 8px;
+        font-weight: bold;
+    }
+    td {
+        padding: 8px;
+        border-bottom: 1px solid #f1f5f9;
+        color: #475569;
+    }
+
+    /* --- GHOST BUTTONS (Pour transformer les boutons en icones) --- */
+    div[data-testid="stButton"] > button {
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0px !important;
+        color: inherit !important;
+        font-size: 1.2rem; 
+        transition: transform 0.1s;
+    }
+    
+    div[data-testid="stButton"] > button:hover {
+        background-color: transparent !important;
+        border: none !important;
+        color: #dc2626 !important;
+        transform: scale(1.1);
+    }
+    
+    div[data-testid="stButton"] > button:active {
+        box-shadow: none !important;
+        background-color: transparent !important;
+    }
+    
+    div[data-testid="stButton"] > button:focus {
+        box-shadow: none !important;
+        outline: none !important;
+    }
+
+    /* Alignement vertical dans les colonnes */
+    [data-testid="column"] {
+        display: flex;
+        align-items: flex-start; /* Alignement haut pour gérer les descriptions longues */
+        padding-top: 5px;
+    }
+    
+    /* Pro Tip Box */
+    .pro-tip {
+        background-color: white;
+        border: 1px solid #f1f5f9;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+    .pro-tip-icon {
+        background-color: #dc2626;
+        color: white;
+        padding: 10px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        width: 40px;
+        min-width: 40px;
+    }
+</style>
 """, unsafe_allow_html=True)
 
-# Le code HTML complet incluant React, Tailwind CSS et Lucide Icons
-html_code = """
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .animate-in { animation: fadeIn 0.5s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    </style>
-</head>
-<body>
-    <div id="root"></div>
+# --- DONNÉES ---
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
-        
-        // Configuration des icônes Lucide
-        const Icon = ({ name, className, size = 20 }) => {
-            useEffect(() => {
-                lucide.createIcons();
-            }, [name, className]);
-            return <i data-lucide={name} className={className} style={{width: size, height: size}}></i>;
-        };
-
-        const App = () => {
-            const [activeTab, setActiveTab] = useState(0);
-            const [checkedItems, setCheckedItems] = useState({});
-            const [expandedSections, setExpandedSections] = useState({ "0-0": true, "1-0": true, "2-0": true, "3-0": true });
-            const [openDetails, setOpenDetails] = useState({});
-
-            const sections = [
-                {
-                    title: "Phase 1 : J-14 à J-7",
-                    subtitle: "L'Affûtage & La Fondation",
-                    icon: "activity",
-                    proTip: "Le but ici est la fraîcheur. Ne cherche plus à progresser physiquement, mais à arriver reposé et ultra-précis.",
-                    categories: [
-                        {
-                            name: "Entraînement & Physio",
-                            items: [
-                                { id: "taper", label: "Phase de Taper", time: "J-14", details: "Réduction du volume global. On maintient l'intensité mais on diminue la durée des séances." },
-                                { id: "massage", label: "Soins des tissus mous", time: "J-10 Max", details: "Dernier massage profond (Deep Tissue) à J-10 max pour éviter les courbatures le jour J." }
-                            ]
-                        },
-                        {
-                            name: "Nutrition & Hygiène",
-                            items: [
-                                { id: "sleep_bank", label: "Sommeil 'Banking'", time: "J-14 à J-0", details: "Augmenter le sommeil (9h-10h) 2 semaines avant améliore les temps de réaction." }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    title: "Phase 2 : J-6 à J-1",
-                    subtitle: "La Semaine Critique",
-                    icon: "zap",
-                    proTip: "Le sevrage de caféine est difficile les 3 premiers jours, mais le boost le jour J sera ton plus grand avantage nerveux.",
-                    categories: [
-                        {
-                            name: "Nutrition & Hydratation",
-                            items: [
-                                { id: "carb_load", label: "Augmentation Glucidique", time: "J-1", details: "Cible : 4-5g de glucides/kg. Maximiser les stocks de glycogène." },
-                                { id: "residues", label: "Régime sans résidus", time: "J-2", details: "Éliminer les fibres pour vider le tractus et gagner du 'poids mort' (500g-1kg)." },
-                                { id: "sodium", label: "Hyperhydratation sodée", time: "J-3 à J-1", details: "Sodium pour retenir le fluide plasmatique, crucial pour la thermorégulation." },
-                                { id: "nitrates_load", label: "Charge Jus de Betterave", time: "J-6 à J-1", details: "Saturer le corps en nitrates pour l'économie d'effort." }
-                            ]
-                        },
-                        {
-                            name: "Suppléments & Logistique",
-                            items: [
-                                { id: "cafeine_reset", label: "Arrêt de la Caféine", time: "J-7 à J-2", details: "Caffeine reset pour resensibiliser les récepteurs à l'adénosine." },
-                                { id: "creatine", label: "Maintien Créatine", time: "Quotidien", details: "Maintenir 3-5g. Ne pas commencer maintenant pour éviter la rétention d'eau." },
-                                { id: "gear_check", label: "Check-up Matériel", time: "J-2", details: "Vérification chaussures, straps, nutrition. Rien de nouveau le jour J." }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    title: "Phase 3 : Le Jour J",
-                    subtitle: "Avant l'épreuve",
-                    icon: "flame",
-                    proTip: "Respecte scrupuleusement le timing du dernier shot de betterave. L'effet de pic est une fenêtre physiologique précise.",
-                    categories: [
-                        {
-                            name: "Chronologie Nutritionnelle",
-                            items: [
-                                { id: "pre_meal", label: "Repas Pré-compétition", time: "H-4 à H-3", details: "Riz blanc, poulet, compote. Pauvre en fibres et lipides." },
-                                { id: "nitrate_final", label: "Nitrate Shot Final", time: "H-2.5", details: "Le pic survient 2 à 3h après l'ingestion." },
-                                { id: "cafeine_final", label: "Caféine Elite", time: "H-1", details: "3 mg/kg. Réduction de la perception de l'effort (RPE)." },
-                                { id: "tampon", label: "Tampon Acide", time: "H-1", details: "Bicarbonate/Beta-Alanine. Attention aux troubles gastriques." }
-                            ]
-                        },
-                        {
-                            name: "Échauffement",
-                            items: [
-                                { id: "racs", label: "RACs Full-Body", time: "H-30 min", details: "Mobilisation articulaire complète sans fatigue." },
-                                { id: "pap_cap", label: "PAP Capsulaire", time: "H-15 min", details: "Contraction PAILs épaule pour préparer le grip." },
-                                { id: "pap_muscular", label: "PAP Musculaire", time: "H-5 min", details: "Sprints et sauts. Intensité max, volume bas." },
-                                { id: "thermal", label: "Veste thermique", time: "Départ", details: "Garder le corps chaud jusqu'à la dernière seconde." }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    title: "Phase 4 : En Course",
-                    subtitle: "Gestion & Entre-runs",
-                    icon: "brain",
-                    proTip: "Le 'Mouth Rinsing' trompe ton cerveau en lui faisant croire que de l'énergie arrive, sans peser sur ton estomac.",
-                    categories: [
-                        {
-                            name: "Protocole Entre 2 Runs",
-                            items: [
-                                { id: "active_recov", label: "Récupération Active", time: "H + 2 min", details: "Marche active, respiration nasale pour redescendre le cardio." },
-                                { id: "hydro_electro", label: "Hydratation Sodée", time: "H + 5 min", details: "200-300ml eau + électrolytes (Vichy Célestins idéal)." },
-                                { id: "mouth_rinse", label: "Relance & Rinçage", time: "H - 5 min", details: "Rinçage bouche sucré (recracher) + petits sauts de relance." }
-                            ]
-                        }
-                    ]
-                }
-            ];
-
-            const toggleItem = (id) => setCheckedItems(p => ({ ...p, [id]: !p[id] }));
-            const toggleDetails = (e, id) => { e.stopPropagation(); setOpenDetails(p => ({ ...p, [id]: !p[id] })); };
-            const toggleSection = (key) => setExpandedSections(p => ({ ...p, [key]: !p[key] }));
-
-            const calculateProgress = (idx) => {
-                let total = 0, checked = 0;
-                sections[idx].categories.forEach(c => c.items.forEach(i => { total++; if (checkedItems[i.id]) checked++; }));
-                return total === 0 ? 0 : (checked / total) * 100;
-            };
-
-            return (
-                <div className="min-h-screen p-4 pb-20 max-w-md mx-auto">
-                    <header className="mb-6 text-center">
-                        <h1 className="text-3xl font-black text-red-600 italic tracking-tighter">READY.</h1>
-                        <h2 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em]">Checklist Elite</h2>
-                    </header>
-
-                    <div className="flex justify-between mb-8 bg-white/60 backdrop-blur-xl p-1.5 rounded-2xl border border-white shadow-sm">
-                        {sections.map((s, i) => (
-                            <button key={i} onClick={() => setActiveTab(i)} className={`flex-1 py-3 rounded-xl flex flex-col items-center transition-all ${activeTab === i ? 'bg-white shadow-md text-red-600 scale-[1.05]' : 'text-slate-300'}`}>
-                                <Icon name={s.icon} size={20} className={activeTab === i ? 'text-red-600' : ''} />
-                                <span className="text-[8px] mt-1 font-black uppercase tracking-widest">Phase {i+1}</span>
-                            </button>
-                        ))}
-                    </div>
-
-                    <div className="mb-6 px-2">
-                        <div className="flex justify-between items-end mb-2">
-                            <div>
-                                <h3 className="text-2xl font-black text-slate-800 tracking-tight leading-none">{sections[activeTab].title}</h3>
-                                <p className="text-red-500 font-bold text-xs uppercase mt-1 tracking-wider">{sections[activeTab].subtitle}</p>
-                            </div>
-                            <span className="text-xs font-black text-slate-300">{Math.round(calculateProgress(activeTab))}%</span>
-                        </div>
-                        <div className="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
-                            <div className="h-full bg-red-600 transition-all duration-700" style={{ width: `${calculateProgress(activeTab)}%` }} />
-                        </div>
-                    </div>
-
-                    <div className="space-y-4">
-                        {sections[activeTab].categories.map((cat, catIdx) => {
-                            const key = `${activeTab}-${catIdx}`;
-                            return (
-                                <div key={catIdx} className="bg-white/80 backdrop-blur-md border border-white rounded-[1.5rem] shadow-sm overflow-hidden">
-                                    <button onClick={() => toggleSection(key)} className="w-full p-4 flex justify-between items-center">
-                                        <span className="font-black text-[10px] uppercase tracking-[0.15em] text-slate-400">{cat.name}</span>
-                                        <Icon name={expandedSections[key] ? "chevron-up" : "chevron-down"} size={14} className="text-slate-300" />
-                                    </button>
-                                    {expandedSections[key] && (
-                                        <div className="p-3 pt-0 space-y-2">
-                                            {cat.items.map(item => (
-                                                <div key={item.id} className="rounded-2xl border border-slate-50 overflow-hidden">
-                                                    <div onClick={() => toggleItem(item.id)} className={`flex items-start gap-3 p-3 cursor-pointer transition-all ${checkedItems[item.id] ? 'bg-red-50/50' : 'bg-white'}`}>
-                                                        <div className="mt-1">
-                                                            <Icon name={checkedItems[item.id] ? "check-circle-2" : "circle"} size={20} className={checkedItems[item.id] ? "text-red-600" : "text-slate-200"} />
-                                                        </div>
-                                                        <div className="flex-1">
-                                                            <div className="flex justify-between items-start">
-                                                                <div className="flex flex-col">
-                                                                    <span className="text-[9px] font-black text-red-500 uppercase mb-0.5">{item.time}</span>
-                                                                    <p className={`font-bold text-sm leading-tight ${checkedItems[item.id] ? 'text-red-700' : 'text-slate-800'}`}>{item.label}</p>
-                                                                </div>
-                                                                <button onClick={(e) => toggleDetails(e, item.id)} className={`p-1.5 rounded-lg ${openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-50 text-slate-300'}`}>
-                                                                    <Icon name="info" size={14} />
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {openDetails[item.id] && (
-                                                        <div className="p-4 bg-white/80 border-t border-slate-50 text-[11px] text-slate-600 font-medium leading-relaxed">
-                                                            {item.details}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    <div className="mt-8 p-5 bg-white rounded-3xl border border-slate-100 shadow-xl flex gap-4 animate-in">
-                        <div className="bg-red-600 p-2.5 rounded-2xl text-white self-start"><Icon name="shield-check" size={20} /></div>
-                        <div>
-                            <h4 className="font-black text-[10px] uppercase text-red-600">Conseil Pro Phase {activeTab + 1}</h4>
-                            <p className="text-[11px] leading-relaxed mt-1 font-bold text-slate-700 italic">"{sections[activeTab].proTip}"</p>
-                        </div>
-                    </div>
-                </div>
-            );
-        };
-
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
-</body>
-</html>
+# HTML pour les tableaux du régime sans résidus
+html_table_avoid = """
+<div style="border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; margin-bottom:10px;">
+    <table style="width:100%">
+      <thead style="background-color: #fef2f2; color: #991b1b;">
+        <tr>
+          <th>Catégorie (Stop)</th>
+          <th>Exemples</th>
+          <th>Pourquoi stopper</th>
+        </tr>
+      </thead>
+      <tbody style="background-color: white;">
+        <tr><td><b>Fibres insolubles</b></td><td>Brocoli, chou, pain complet</td><td>↑ volume, ballonnements</td></tr>
+        <tr><td><b>Légumineuses</b></td><td>Lentilles, pois chiches</td><td>↑ gaz + digestion lente</td></tr>
+        <tr><td><b>Céréales complètes</b></td><td>Riz complet, quinoa</td><td>↑ contenu intestinal</td></tr>
+        <tr><td><b>Fruits riches</b></td><td>Framboises, poires</td><td>↑ fermentation</td></tr>
+        <tr><td><b>Noix / fruits secs</b></td><td>Amandes, noix</td><td>Gras ralentit vidange</td></tr>
+        <tr><td><b>Boissons gazeuses</b></td><td>Soda, eau gazeuse</td><td>Ballonnements, CO₂</td></tr>
+      </tbody>
+    </table>
+</div>
 """
 
-# Affichage du composant dans Streamlit
-# On utilise une hauteur fixe suffisante pour le scroll interne
-components.html(html_code, height=900, scrolling=True)
+html_table_go = """
+<div style="border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0;">
+    <table style="width:100%">
+      <thead style="background-color: #f0fdf4; color: #166534;">
+        <tr>
+          <th>Objectif (Go)</th>
+          <th>Aliments recommandés</th>
+          <th>Notes pratiques</th>
+        </tr>
+      </thead>
+      <tbody style="background-color: white;">
+        <tr><td><b>Glucides digestibles</b></td><td>Riz blanc, pâtes, banane</td><td>Énergie intacte</td></tr>
+        <tr><td><b>Protéines faciles</b></td><td>Poulet, dinde, œufs</td><td>Digestion rapide</td></tr>
+        <tr><td><b>Lipides</b></td><td>Huile d'olive (très peu)</td><td>Légers, pas de friture</td></tr>
+        <tr><td><b>Liquides & sodium</b></td><td>Eau plate, bouillon</td><td>Hydratation</td></tr>
+      </tbody>
+    </table>
+</div>
+"""
+
+sections = [
+    {
+        "title": "Phase 1 : J-14 à J-7",
+        "subtitle": "L'Affûtage & La Fondation",
+        "icon": "📉", 
+        "proTip": "Le but ici est la fraîcheur. On ne cherche plus à progresser physiquement, mais à arriver reposé et ultra-performant.",
+        "categories": [
+            {
+                "name": "Entraînement & Physio",
+                "items": [
+                    {"id": "taper", "label": "Phase de Taper", "time": "J-14 ou J-7", "desc": "Réduction drastique du volume d'entraînement.", "details": "Réduction du volume global en maintenant l'intensité"},
+                ]
+            },
+            {
+                "name": "Nutrition & Hygiène",
+                "items": [
+                    {"id": "sleep_bank", "label": "Sommeil 'Banking'", "time": "J-14 à J-0", "desc": "Cherche à 'stocker' du sommeil.", "details": "<p>Cherche à stocker du sommeil.</p><p>Vise +45 à +90 min/nuit.</p><p>La régularité > Quantité absolue.</p>"}
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Phase 2 : J-6 à J-1",
+        "subtitle": "La Semaine Critique",
+        "icon": "⚡", 
+        "proTip": "Tout le monde est prêt physiquement. Ceux qui gagnent sont ceux qui optimisent les détails que les autres négligent.",
+        "categories": [
+            {
+                "name": "Nutrition & Hydratation",
+                "items": [
+                    {"id": "nitrates_load", "label": "Charge de Jus de Betterave", "time": "J-6 à J-1", "desc": "Saturer le corps en nitrates (1-2 shots/jour).", "details": "<p>70-140 ml/jour pour augmenter l'oxyde nitrique.</p><p>Améliore l'économie de l'effort.</p><p style='color:#dc2626; font-weight:bold'>Attention : Éviter bains de bouche antiseptiques.</p>"},
+                    {"id": "sodium", "label": "Hyperhydratation sodée", "time": "J-3 à J-1", "desc": "Eau riche en sodium ou électrolytes.", "details": "Bois de l'eau riche en sodium ou ajoute des électrolytes à ton hydratation si tu ne le fais pas quotidiennement."},
+                    {"id": "residues", "label": "Régime sans résidus", "time": "J-2", "desc": "Élimine les fibres (légumes crus, grains entiers).", "details": f"<p>Élimine les fibres pour vider le tractus intestinal. Gain possible de 500g à 1kg.</p>{html_table_avoid}{html_table_go}"},
+                    {"id": "carb_load", "label": "Augmentation Glucidique", "time": "J-1", "desc": "Cible : 4-5g de glucides / kg de PDC.", "details": "<p>Cible : 4-5g de glucides / kg de PDC, à répartir sur la journée.</p><p>Dernier gros apport ≥6 h avant coucher.</p>"},
+                ]
+            },
+            {
+                "name": "Suppléments & Logistique",
+                "items": [
+                    {"id": "cafeine_reset", "label": "Arrêt de la Caféine", "time": "J-7 à J-2", "desc": "'Caffeine reset' pour la sensibilité.", "details": "<p>Se sevrer pour resensibiliser les récepteurs.</p><p>Si grand consommateur : Réduire à ≤50 mg/j.</p>"},
+                    {"id": "creatine", "label": "Maintien Créatine", "time": "Quotidien", "desc": "Maintenir la dose de croisière (3-5g).", "details": "<p>Maintenir la dose de croisière.</p><p style='color:#dc2626; font-weight:bold'>Ne commence surtout pas maintenant si tu n'en consommes pas.</p>"},
+                    {"id": "gear_check", "label": "Check-up Matériel", "time": "J-1", "desc": "Vérification complète : chaussures, straps.", "details": "<p>Chaussures, straps, nutrition. Rien de nouveau le jour J.</p>"},
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Phase 3 : Le Jour J",
+        "subtitle": "Avant l'épreuve",
+        "icon": "🔥", 
+        "proTip": "L'objectif de l'échauffement est l'excitation neuronale, pas la fatigue.",
+        "categories": [
+            {
+                "name": "Chronologie Nutritionnelle",
+                "items": [
+                    {"id": "pre_meal", "label": "Repas Pré-compétition", "time": "H-4 à H-3", "desc": "Glucides ++, pauvre en lipides/fibres.", "details": "<p>Riche glucides, modéré protéines (0,25g/kg), pauvre lipides/fibres.</p><p>Ex: Riz blanc, compote, poulet.</p>"},
+                    {"id": "nitrate_final", "label": "Dernier shot de betterave", "time": "H-2.5", "desc": "Dernier shot de betterave concentré.", "details": "Le pic de nitrates plasmatiques survient 2 à 3h après ingestion."},
+                    {"id": "cafeine_final", "label": "Caféine Elite", "time": "H-1", "desc": "Dosage : 3 mg / kg de poids de corps.", "details": "<p>2 à 3 mg/kg fractionné en 2 prises.</p><p>Effet : Réduction de la perception de l'effort (RPE).</p>"},
+                ]
+            },
+            {
+                "name": "Échauffement (Warm-up)",
+                "items": [
+                    {"id": "racs", "label": "RACs Full-Body", "time": "H-30 min", "desc": "Mobilisation articulaire complète.", "details": "Échauffement articulaire complet."},
+                    {"id": "pap_cap", "label": "PAP Capsulaire", "time": "H-15 min", "desc": "Effort max sur contraction PAILs.", "details": "<p>Effort max sur contraction PAILs.</p><p style='color:#dc2626; font-weight:bold'>Attention : Volume minimal pour ne pas cramer le système nerveux.</p>"},
+                    {"id": "plio", "label": "Pliométrie extensive", "time": "H-10 min", "desc": "Volume bas sur sauts intensité moyenne.", "details": "Volume sans aller à la fatigue."},
+                    {"id": "pap_muscular", "label": "PAP Musculaire", "time": "H-5 min", "desc": "Intensité max, volume très bas.", "details": "Intensité max, volume bas (Sprints/Sauts)."},
+                    {"id": "thermal", "label": "Veste thermique", "time": "Départ", "desc": "Garder le corps au chaud jusqu'au bout.", "details": "Garder le corps au chaud jusqu'au bout."},
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Phase 4 : En Course",
+        "subtitle": "Gestion & Entre-runs",
+        "icon": "🧠", 
+        "proTip": "Quand l’épreuve s’étire, la différence entre les bons et les champions se joue dans la gestion entre les runs.",
+        "categories": [
+            {
+                "name": "Protocole Entre 2 Runs",
+                "items": [
+                    {"id": "active_recov", "label": "Récupération Active", "time": "H + 2 min", "desc": "Marche active. Ne t'assois pas.", "details": "<p>Marche active.</p><p>Respire par le nez pour faire redescendre le rythme cardiaque.</p>"},
+                    {"id": "hydro_electro", "label": "Hydratation", "time": "H + 5 min", "desc": "200-300ml d'eau avec électrolytes.", "details": "<p>Bois 200-300ml d'eau avec électrolytes ou Vichy Célestins.</p>"},
+                    {"id": "refuel", "label": "Apport Énergie", "time": "H + 10 min", "desc": "Demi-banane ou miel si nécessaire.", "details": "<p>Si vide : Demi-banane ou miel.</p><p>Si bien : Rien de solide.</p>"},
+                    {"id": "mouth_rinse", "label": "Relance", "time": "H - 5 min", "desc": "Rinçage de bouche sucré (recracher).", "details": "<p>Rinçage de bouche boisson sucrée, puis recracher.</p><p>Remets-toi en mouvement.</p>"},
+                ]
+            },
+            {
+                "name": "Mental In-Game",
+                "items": [
+                    {"id": "self_talk", "label": "Self-Talk Positif", "time": "Pendant", "desc": "Dialogue interne instructif.", "details": "Focus sur les consignes techniques et l'instant présent."},
+                ]
+            }
+        ]
+    }
+]
+
+# --- LOGIQUE D'ÉTAT ---
+
+# Initialisation du set des items cochés
+if 'checked_items' not in st.session_state:
+    st.session_state.checked_items = set()
+
+# Fonction pour ajouter/retirer un item
+def toggle_item(item_id):
+    if item_id in st.session_state.checked_items:
+        st.session_state.checked_items.remove(item_id)
+    else:
+        st.session_state.checked_items.add(item_id)
+
+# Calcul du pourcentage de progression par phase
+def calculate_progress(phase_index):
+    phase = sections[phase_index]
+    total = 0
+    checked = 0
+    for cat in phase["categories"]:
+        for item in cat["items"]:
+            total += 1
+            if item["id"] in st.session_state.checked_items:
+                checked += 1
+    return int((checked / total) * 100) if total > 0 else 0
+
+# --- AFFICHAGE (UI) ---
+
+# En-tête
+st.markdown("<h1>COMPETITION READY.</h1>", unsafe_allow_html=True)
+st.markdown("<h2>Checklist</h2>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Navigation Onglets
+tab_labels = [f"{s['icon']} Phase {i+1}" for i, s in enumerate(sections)]
+tabs = st.tabs(tab_labels)
+
+for i, tab in enumerate(tabs):
+    with tab:
+        section = sections[i]
+        
+        # Titre Phase & Barre de Progression
+        col_header, col_prog = st.columns([0.7, 0.3])
+        with col_header:
+            st.markdown(f"### {section['title']}")
+            st.markdown(f"<p style='color:#ef4444; font-weight:bold; font-size:12px; text-transform:uppercase;'>{section['subtitle']}</p>", unsafe_allow_html=True)
+        
+        progress = calculate_progress(i)
+        with col_prog:
+            st.markdown(f"<h3 style='text-align:right; color:#cbd5e1'>{progress}%</h3>", unsafe_allow_html=True)
+        
+        st.progress(progress / 100)
+        st.write("") # Spacer
+
+        # Catégories & Items
+        for cat in section["categories"]:
+            with st.expander(cat["name"], expanded=True):
+                for item in cat["items"]:
+                    
+                    # Mise en page : [Icone (Bouton)] [Texte] [Info]
+                    c1, c2, c3 = st.columns([0.15, 0.70, 0.15], gap="small")
+                    
+                    is_checked = item["id"] in st.session_state.checked_items
+                    
+                    # --- COLONNE 1 : ICONE/BOUTON ---
+                    with c1:
+                        # Si l'item est coché, on affiche une coche rouge, sinon un cercle gris
+                        icon_label = "✅" if is_checked else "⚪"
+                        
+                        # Le bouton sert de trigger. st.rerun() force le rafraichissement visuel immédiat
+                        if st.button(icon_label, key=f"btn_{item['id']}"):
+                            toggle_item(item['id'])
+                            st.rerun()
+
+                    # --- COLONNE 2 : TEXTE ---
+                    with c2:
+                        # Le style change si la tâche est accomplie
+                        if is_checked:
+                            # Style validé (barré, rouge sombre)
+                            html_content = f"""
+                            <div style='text-decoration: line-through; color: #b91c1c; opacity: 0.7;'>
+                                <span style='font-size:10px; font-weight:900; text-transform:uppercase; margin-right:5px;'>{item['time']}</span><br>
+                                <b>{item['label']}</b>
+                            </div>
+                            """
+                        else:
+                            # Style normal (actif)
+                            html_content = f"""
+                            <div>
+                                <span style='font-size:10px; font-weight:900; color:#ef4444; text-transform:uppercase; margin-right:5px;'>{item['time']}</span><br>
+                                <b style='color:#1e293b'>{item['label']}</b><br>
+                                <span style='font-size:12px; color:#64748b'>{item['desc']}</span>
+                            </div>
+                            """
+                        st.markdown(html_content, unsafe_allow_html=True)
+
+                    # --- COLONNE 3 : INFO ---
+                    with c3:
+                        st.popover("ℹ️", use_container_width=True).markdown(item["details"], unsafe_allow_html=True)
+                    
+                    # Petit espace entre les items
+                    st.write("")
+
+        # Footer "Pro Tip"
+        st.markdown(f"""
+        <div class="pro-tip">
+            <div class="pro-tip-icon">🛡️</div>
+            <div>
+                <div style="font-weight:900; font-size:10px; text-transform:uppercase; color:#dc2626;">Conseil Pro Phase {i+1}</div>
+                <div style="font-size:12px; font-style:italic; font-weight:600; color:#334155; margin-top:4px;">"{section['proTip']}"</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+# Footer Global
+st.markdown("<br><p style='text-align:center; color:#cbd5e1; font-size:10px; font-weight:900; letter-spacing:0.3em; text-transform:uppercase;'>Next Athlete Performance System v1.0</p>", unsafe_allow_html=True)
+st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
