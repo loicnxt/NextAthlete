@@ -248,7 +248,7 @@ html_code = """
                     sections.map((s, i) => React.createElement('button', {
                         key: i,
                         onClick: () => setActiveTab(i),
-                        className: `flex-1 py-3 rounded-xl flex flex-col items-center transition-all ${activeTab === i ? 'bg-white shadow-md text-red-600 scale-[0.5]' : 'text-gray-300'}`
+                        className: `flex-1 py-3 rounded-xl flex flex-col items-center transition-all ${activeTab === i ? 'bg-white shadow-md text-red-600 scale-[1.05]' : 'text-gray-300'}`
                     }, 
                         React.createElement('span', {
                             className: 'mb-1',
@@ -292,7 +292,9 @@ html_code = """
                             ),
                             React.createElement('button', {
                                 onClick: (e) => toggleInfo(e, item.id),
-                                className: `p-2 rounded-lg ${openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-50 text-slate-300'}`
+                                className: `px-1.5 py-0.5 text-[9px] rounded leading-none font-bold ${openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'}
+`
+`
                             }, 'ⓘ')
                         ),
                         openDetails[item.id] && React.createElement('div', { className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 leading-relaxed border border-white' },
