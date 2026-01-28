@@ -177,7 +177,7 @@ html_code = """
                             ),
                             React.createElement('button', {
                                 onClick: (e) => toggleInfo(e, item.id),
-                                className: `p-2 rounded-lg ${openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-50 text-slate-300'}`
+                                className: `p-2 rounded-lg ${openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-50 text-slate-100'}`
                             }, 'ⓘ')
                         ),
                         openDetails[item.id] && React.createElement('div', { className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 leading-relaxed italic border border-white' },
