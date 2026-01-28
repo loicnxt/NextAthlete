@@ -64,11 +64,11 @@ html_code = """
                 categories: [
                     {
                         name: "Entraînement & Physio",
-                        items: [{ id: "taper", label: "Phase de Taper", time: "J-14", details: "Réduction du volume global en maintenant l'intensité." }]
+                        items: [{ id: "taper", label: "Phase de Taper", time: "J-14 ou J-7", details: "Réduction du volume global en maintenant l'intensité." }]
                     },
                     {
                         name: "Nutrition & Hygiène",
-                        items: [{ id: "sleep", label: "Sommeil 'Banking'", time: "J-14", details: "Vise +45 à +90 min/nuit.<br>La régularité > Quantité." }]
+                        items: [{ id: "sleep", label: "Sommeil 'Banking'", time: "J-14 à J-0", details: "Cherche à stocker du sommeil.<br>Vise +45 à +90 min/nuit.<br>La régularité > Quantité." }]
                     }
                 ]
             },
@@ -76,12 +76,12 @@ html_code = """
                 title: "Phase 2 : J-6 à J-1",
                 subtitle: "La Semaine Critique",
                 icon: "bolt",
-                proTip: "Tout le monde est prêt physiquement. Ceux qui gagnent sont ceux qui optimisent les détails.",
+                proTip: "Tout le monde est prêt physiquement. Ceux qui gagnent sont ceux qui optimisent les détails que les autres négligent.",
                 categories: [
                     {
                         name: "Nutrition & Hydratation",
                         items: [
-                            { id: "beet", label: "Jus de Betterave", time: "J-6", details: "70-140 ml/jour.\\nAméliore l'économie d'effort.\\nÉviter bains de bouche." },
+                            { id: "beet", label: "Charge de Jus de Betterave", time: "J-6 à J-1", details: "70-140 ml/jour pour augmenter l'oxyde nitrique.<br>Améliore l'économie de l'effort et l'utilisation de l'ATP Pcr.<br> <span class="text-red-600 font-semibold">Attention : Éviter bains de bouche antiseptiques." },
                             { id: "sodium", label: "Hyperhydratation sodée", time: "J-3", details: "Eau riche en sodium ou électrolytes." },
                                                         { id: "residues", label: "Régime sans résidus", time: "J-2", details: `
 <div class="space-y-4">
@@ -170,7 +170,7 @@ html_code = """
                         ]
                     },
                     {
-                        name: "Suppléments",
+                        name: "Suppléments & Logistique",
                         items: [
                             { id: "caf_reset", label: "Arrêt de la Caféine", time: "J-7", details: "Se sevrer pour resensibiliser les récepteurs." },
                             { id: "gear", label: "Check-up Matériel", time: "J-1", details: "Chaussures, straps, nutrition.\\nRien de nouveau le jour J." }
