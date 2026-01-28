@@ -39,7 +39,7 @@ html_code = """
                     },
                     {
                         name: "Nutrition & Hygiène",
-                        items: [{ id: "sleep", label: "Sommeil 'Banking'", time: "J-14", details: "Vise +45 à +90 min/nuit.\\nLa régularité > Quantité." }]
+                        items: [{ id: "sleep", label: "Sommeil 'Banking'", time: "J-14", details: "Vise +45 à +90 min/nuit.\nLa régularité > Quantité." }]
                     }
                 ]
             },
