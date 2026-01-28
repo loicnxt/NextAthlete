@@ -319,4 +319,13 @@ html_code = """
 </html>
 """
 
-components.html(html_code, height=2000, scrolling=False)
+components.html(html_code + '''
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: auto;
+        overflow: visible;
+        background-color: #ffffff;
+    }
+''', height=2000, scrolling=False)
