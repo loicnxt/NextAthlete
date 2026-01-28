@@ -186,10 +186,11 @@ html_code = """
                 proTip: "L'objectif de l'échauffement est l'excitation neuronale, pas la fatigue.",
                 categories: [
                     {
-                        name: "Nutrition",
+                        name: "Chronologie Nutritionnelle",
                         items: [
-                            { id: "pre_meal", label: "Repas Pré-compé", time: "H-4", details: "Glucides ++, pauvre en lipides/fibres (ex: riz blanc, compote)." },
-                            { id: "caf_final", label: "Caféine Elite", time: "H-1", details: "3 mg / kg de poids de corps.\\nRéduit le RPE." }
+                            { id: "pre_meal", label: "Repas Pré-compétition", time: "H-4 à H-3", details: "Riche en glucides, modéré en protéines (0,25-0,3g/kg max), très pauvre en lipides et fibres.<br>Exemple : Riz blanc, compote, blanc de poulet ou protéine en poudre.<br>Facile à digérer, énergie rapide." },
+                            { id: "nitrate_final", label: "Dernier shot de betterave", time: "H-2.5 à H-2", details: "Dernier shot de betterave.<br>Le pic de nitrates plasmatiques survient 2 à 3h après ingestion." },
+                            { id: "caf_final", label: "Caféine Elite", time: "H-1", details: "2 à 3 mg/kg fractionné en 2 prises par exemple sur des parcours différents (c'est beaucoup, teste-le avant !).<br>Effet : Réduction de la perception de l'effort (RPE) et meilleure réactivité." }
                         ]
                     },
                     {
