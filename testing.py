@@ -329,7 +329,7 @@ html_code = """
 )
 ),
                     React.createElement('div', null,
-                        React.createElement('h4', { className: 'font-black text-[10px] uppercase tracking-widest text-red-600' }, `Conseil Pro Phase ${activeTab+1}`),
+                        React.createElement('h4', { className: 'font-black text-[10px] uppercase text-red-600',  style: { letterSpacing: '0.2em' } }, `Conseil Pro Phase ${activeTab+1}`),
                         React.createElement('p', { className: 'text-[11px] font-bold text-slate-700 italic mt-1' }, `"${currentPhase.proTip}"`)
                     ))
             );
