@@ -337,4 +337,4 @@ components.html(html_code + '''
     }
 </style>
 <div class="footer-caption-custom">NEXT ATHLETE PERFORMANCE SYSTEM</div>
-''', height=900, scrolling=True)
+''', height=1200, scrolling=False)
