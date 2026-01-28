@@ -312,14 +312,14 @@ html_code = """
 
                 // Footer Tip
                 React.createElement('div', { className: 'mt-8 p-5 bg-white rounded-3xl border border-slate-100 shadow-xl flex gap-4' },
-                    React.createElement('div', { className: 'bg-red-600 p-2.5 rounded-2xl text-white shadow-lg shadow-red-100 self-start' },
+                    React.createElement('div', { className: 'bg-red-600 p-2 rounded-2xl text-white shadow-lg shadow-red-100 self-start' },
                     React.createElement('svg', {
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 24 24",
     strokeWidth: 1.5,         
     stroke: "currentColor",
-    className: "size-6"       
+    className: "w-5 h-5"       
 },
     React.createElement('path', {
         strokeLinecap: "round",
