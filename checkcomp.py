@@ -128,7 +128,7 @@ html_code = """
                 // Header
                 React.createElement('header', { className: 'mb-6 text-center' },
                     React.createElement('h1', { className: 'text-3xl font-black text-red-600 italic tracking-tighter' }, 'COMPETITION READY.'),
-                    React.createElement('p', { className: 'text-[10px] font-bold text-gray-400 uppercase tracking-widest' }, 'Checklist Performance')
+                    React.createElement('h2', { className: 'text-sm font-bold text-slate-400 uppercase tracking-[0.3em]' }, 'Checklist')
                 ),
 
                 // Navigation
