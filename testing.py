@@ -248,7 +248,7 @@ html_code = """
                     sections.map((s, i) => React.createElement('button', {
                         key: i,
                         onClick: () => setActiveTab(i),
-                        className: `flex-1 py-3 rounded-xl flex flex-col items-center transition-all ${activeTab === i ? 'bg-white shadow-md text-red-600 scale-[0.95]' : 'text-gray-300'}`
+                        className: `flex-1 py-3 rounded-xl flex flex-col items-center transition-all ${activeTab === i ? 'bg-white shadow-md text-red-600 scale-[0.5]' : 'text-gray-300'}`
                     }, 
                         React.createElement('span', {
                             className: 'mb-1',
