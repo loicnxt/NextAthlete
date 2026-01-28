@@ -292,10 +292,10 @@ components.html(html_code + '''
         position: fixed;
         left: 0;
         bottom: 0;
-        width: 100vw;
+        width: 9px;
         text-align: center;
         font-weight: bold;
-        color: #dc2626;
+        color: #CBD5E1;
         font-size: 0.75rem;
         letter-spacing: 0.05em;
         background: transparent;
@@ -304,5 +304,5 @@ components.html(html_code + '''
         margin-bottom: 10px;
     }
 </style>
-<div class="footer-caption-custom">Next Athlete Performance System</div>
+<div class="footer-caption-custom">NEXT ATHLETE PERFORMANCE SYSTEM</div>
 ''', height=900, scrolling=True)
