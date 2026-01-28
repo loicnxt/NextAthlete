@@ -290,10 +290,18 @@ html_code = """
                                 React.createElement('p', { className: 'text-[9px] font-black text-red-500 uppercase' }, item.time),
                                 React.createElement('p', { className: `text-sm font-bold ${checkedItems[item.id] ? 'text-red-700' : 'text-slate-800'}` }, item.label)
                             ),
-                            React.createElement('button', {
-                                onClick: (e) => toggleInfo(e, item.id),
-                                className: `px-1.5 py-0.5 text-[9px] rounded leading-none font-bold ${openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'}`
-                            }, 'ⓘ')
+                           React.createElement('button', {
+    onClick: (e) => toggleInfo(e, item.id),
+    className: `
+        p-1
+        text-[10px]
+        rounded-md
+        leading-none
+        ${openDetails[item.id] 
+            ? 'bg-red-600 text-white' 
+            : 'bg-slate-50 text-slate-300'}
+    `
+}, 'ⓘ')
                         ),
                         openDetails[item.id] && React.createElement('div', { className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 leading-relaxed border border-white' },
                             React.createElement('span', { style: { display: 'block', width: '100%' }, dangerouslySetInnerHTML: { __html: item.details } })
