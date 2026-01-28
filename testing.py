@@ -2,14 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Checklist Competition", layout="centered", initial_sidebar_state="collapsed")
-st.markdown("""
-<style>
-    .block-container {
-        padding-top: 0rem;
-        padding-bottom: 0rem;
-    }
-</style>
-""", unsafe_allow_html=True)
+
 html_code = """
 <!DOCTYPE html>
 <html lang="fr">
@@ -332,7 +325,7 @@ components.html(html_code + '''
         padding: 0;
         height: auto;
         overflow: visible;
-        background-color: #f8fafc;
+        background-color: #ffffff;
     }
     .footer-caption-custom {
         position: fixed;
