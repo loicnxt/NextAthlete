@@ -240,6 +240,7 @@ html_code = """
                 React.createElement('header', { className: 'mb-6 text-center' },
                     React.createElement('h1', { className: 'text-3xl font-black text-red-600 italic tracking-tighter' }, 'COMPETITION READY.'),
                     React.createElement('h2', { className: 'text-sm font-bold text-slate-400 uppercase tracking-[0.3em]' }, 'Checklist')
+                      React.createElement('p', { className: 'mt-2 font-black text-[9px] uppercase tracking-[0.3em] text-[#CBD5E1]' }, 'NEXT ATHLETE PERFORMANCE SYSTEM')
                 ),
 
                 // Navigation
