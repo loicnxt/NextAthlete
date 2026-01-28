@@ -292,7 +292,7 @@ components.html(html_code + '''
         position: fixed;
         left: 0;
         bottom: 0;
-        width: 9px;
+        width: 100vw;
         text-align: center;
         font-weight: bold;
         color: #CBD5E1;
