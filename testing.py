@@ -294,10 +294,10 @@ components.html(html_code + '''
         bottom: 0;
         width: 100vw;
         text-align: center;
-        font-weight: bold;
+        font-weight: 900;
         color: #CBD5E1;
-        font-size: 0.75rem;
-        letter-spacing: 0.05em;
+        font-size: 9px;
+        letter-spacing: 0.3em;
         background: transparent;
         z-index: 9999;
         font-family: 'Inter', sans-serif;
