@@ -82,8 +82,8 @@ html_code = """
                         name: "Nutrition & Hydratation",
                         items: [
                             { id: "beet", label: "Charge de Jus de Betterave", time: "J-6 à J-1", details: `70-140 ml/jour pour augmenter l'oxyde nitrique.<br>Améliore l'économie de l'effort et l'utilisation de l'ATP Pcr.<br> <span class="text-red-600 font-semibold">Attention : Éviter bains de bouche antiseptiques.</span>` },
-                            { id: "sodium", label: "Hyperhydratation sodée", time: "J-3", details: "Eau riche en sodium ou électrolytes." },
-                                                        { id: "residues", label: "Régime sans résidus", time: "J-2", details: `
+                            { id: "sodium", label: "Hyperhydratation sodée", time: "J-3 à J-1", details: "Bois de l'eau riche en sodium ou ajoute des électrolytes à ton hydratation si tu ne le fais pas quotidiennement." },
+                            { id: "residues", label: "Régime sans résidus", time: "J-2", details: `
 <div class="space-y-4">
     <p>
         Élimine les fibres (légumes crus, grains entiers) pour vider le tractus intestinal. Cela évite les troubles digestifs et peut te faire gagner 500g à 1kg sur la balance ("poids mort" intestinal).
@@ -166,13 +166,14 @@ html_code = """
     </div>
 </div>
 ` },
-                            { id: "carbs", label: "Charge Glucidique", time: "J-1", details: "Cible : 4-5g de glucides / kg de PDC." }
+                            { id: "carbs", label: "Augmentation Glucidique Contrôlée", time: "J-1", details: "Cible : 4-5g de glucides / kg de PDC, à répartir sur la journée.<br>Dernier gros apport ≥6 h avant coucher." }
                         ]
                     },
                     {
                         name: "Suppléments & Logistique",
                         items: [
-                            { id: "caf_reset", label: "Arrêt de la Caféine", time: "J-7", details: "Se sevrer pour resensibiliser les récepteurs." },
+                            { id: "caf_reset", label: "Arrêt de la Caféine", time: "J-7 à J-2", details: "Se sevrer une semaine avant pour resensibiliser les récepteurs.<br>Ajustement recommandé si grand consommateur de café pour éviter les troubles : Réduire à ≤50 mg/j, pas arrêt total." },
+                            { id: "gear", label: "Maintien Créatine et Beta-Alanine", time: "Quotidien", details: `Si tu en prends déjà, maintenir la dose de croisière.<span class="text-red-600 font-semibold">Ne commence surtout pas maintenant si tu n'en consommes pas.</span>` },
                             { id: "gear", label: "Check-up Matériel", time: "J-1", details: "Chaussures, straps, nutrition.\\nRien de nouveau le jour J." }
                         ]
                     }
