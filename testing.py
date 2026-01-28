@@ -1,7 +1,7 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-st.set_page_config(page_title="Competition Ready", layout="centered", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Checklist Competition", layout="centered", initial_sidebar_state="collapsed")
 
 html_code = """
 <!DOCTYPE html>
@@ -239,7 +239,7 @@ html_code = """
                 // Header
                 React.createElement('header', { className: 'mb-6 text-center' },
                     React.createElement('h1', { className: 'text-3xl font-black text-red-600 italic tracking-tighter' }, 'COMPETITION READY.'),
-                    React.createElement('p', { className: 'text-[10px] font-bold text-gray-400 uppercase tracking-widest' }, 'Checklist Performance')
+                    React.createElement('h2', { className: 'text-sm font-bold text-slate-400 uppercase tracking-[0.3em]' }, 'Checklist')
                 ),
 
                 // Navigation
