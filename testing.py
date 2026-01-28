@@ -320,6 +320,13 @@ html_code = """
 
 components.html(html_code + '''
 <style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: auto;
+        overflow: visible;
+        background-color: #f8fafc;
+    }
     .footer-caption-custom {
         position: fixed;
         left: 0;
