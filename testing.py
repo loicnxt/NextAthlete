@@ -293,10 +293,11 @@ html_code = """
                            React.createElement('button', {
     onClick: (e) => toggleInfo(e, item.id),
     className: `
-        p-1
-        text-[10px]
-        rounded-md
+        p-1.5
+        text-[11px]
         leading-none
+        rounded-lg
+        transition-all
         ${openDetails[item.id] 
             ? 'bg-red-600 text-white' 
             : 'bg-slate-50 text-slate-300'}
