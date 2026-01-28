@@ -204,6 +204,6 @@ html_code = """
 </html>
 """
 
-components.html(html_code, height=700, scrolling=False)
+components.html(html_code, height=700, scrolling=True)
 
 st.caption("Next Athlete Performance System")
