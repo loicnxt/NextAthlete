@@ -81,7 +81,7 @@ html_code = """
                     {
                         name: "Nutrition & Hydratation",
                         items: [
-                            { id: "beet", label: "Charge de Jus de Betterave", time: "J-6 à J-1", details: "70-140 ml/jour pour augmenter l'oxyde nitrique.<br>Améliore l'économie de l'effort et l'utilisation de l'ATP Pcr.<br> <span class="text-red-600 font-semibold">Attention : Éviter bains de bouche antiseptiques." },
+                            { id: "beet", label: "Charge de Jus de Betterave", time: "J-6 à J-1", details: "70-140 ml/jour pour augmenter l'oxyde nitrique.<br>Améliore l'économie de l'effort et l'utilisation de l'ATP Pcr.<br> <span class="text-red-600 font-semibold">Attention : Éviter bains de bouche antiseptiques.</span>" },
                             { id: "sodium", label: "Hyperhydratation sodée", time: "J-3", details: "Eau riche en sodium ou électrolytes." },
                                                         { id: "residues", label: "Régime sans résidus", time: "J-2", details: `
 <div class="space-y-4">
