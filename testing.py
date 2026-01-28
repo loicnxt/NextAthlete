@@ -313,9 +313,21 @@ html_code = """
                 // Footer Tip
                 React.createElement('div', { className: 'mt-8 p-5 bg-white rounded-3xl border border-slate-100 shadow-xl flex gap-4' },
                     React.createElement('div', { className: 'bg-red-600 p-2.5 rounded-2xl text-white shadow-lg shadow-red-100 self-start' },
-        React.createElement('svg', { xmlns: "http://www.w3.org/2000/svg", fill: "none", viewBox: "0 0 24 24", strokeWidth: 2, stroke: "currentColor", className: "w-5 h-5" },
-            React.createElement('path', { strokeLinecap: "round", strokeLinejoin: "round", d: "M9 12l2 2 4-4m1 10a9 9 0 11-18 0 9 9 0 0118 0z" })
-        )),
+                    React.createElement('svg', {
+    xmlns: "http://www.w3.org/2000/svg",
+    fill: "none",
+    viewBox: "0 0 24 24",
+    strokeWidth: 1.5,         # ton stroke-width
+    stroke: "currentColor",
+    className: "size-6"       # ton class
+},
+    React.createElement('path', {
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
+        d: "M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"
+    })
+)
+),
                     React.createElement('div', null,
                         React.createElement('h4', { className: 'font-black text-[10px] uppercase tracking-widest text-red-600' }, `Conseil Pro Phase ${activeTab+1}`),
                         React.createElement('p', { className: 'text-[11px] font-bold text-slate-700 italic mt-1' }, `"${currentPhase.proTip}"`)
