@@ -30,7 +30,7 @@ html_code = """
             {
                 title: "Phase 1 : J-14 à J-7",
                 subtitle: "L'Affûtage & La Fondation",
-                icon: <Activity className="w-5 h-5" />,
+                icon: "⏱️",
                 proTip: "Le but ici est la fraîcheur. On ne cherche plus à progresser physiquement, mais à arriver reposé et ultra-performant.",
                 categories: [
                     {
