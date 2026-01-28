@@ -314,7 +314,7 @@ html_code = """
                 React.createElement('div', { className: 'mt-8 p-5 bg-white rounded-3xl border border-slate-100 shadow-xl flex gap-4' },
                     React.createElement('div', { className: 'bg-red-600 p-3 rounded-2xl text-white h-fit' }, '💡'),
                     React.createElement('div', null,
-                        React.createElement('h4', { className: 'font-black text-[10px] uppercase text-red-600' }, `Conseil Pro Phase ${activeTab+1}`),
+                        React.createElement('h4', { className: 'font-black text-[10px] uppercase tracking-widest text-red-600' }, `Conseil Pro Phase ${activeTab+1}`),
                         React.createElement('p', { className: 'text-[11px] font-bold text-slate-700 italic mt-1' }, `"${currentPhase.proTip}"`)
                     )
                 )
