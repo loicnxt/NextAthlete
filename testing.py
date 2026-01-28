@@ -25,12 +25,53 @@ html_code = """
     <script>
         const { useState, useEffect } = React;
 
+        const ICONS = {
+    heartbeat: `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+     fill="none" stroke="currentColor" stroke-width="2"
+     stroke-linecap="round" stroke-linejoin="round"
+     class="w-6 h-6">
+  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+</svg>`,
+
+    bolt: `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+     fill="none" stroke="currentColor" stroke-width="2"
+     stroke-linecap="round" stroke-linejoin="round"
+     class="w-6 h-6">
+  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+</svg>`,
+
+    flame: `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+     fill="none" stroke="currentColor" stroke-width="2"
+     stroke-linecap="round" stroke-linejoin="round"
+     class="w-6 h-6">
+  <path d="M8.5 14.5A2.5 2.5 0 0 0 11 17a2.5 2.5 0 0 0 2.5-2.5
+           c0-1.38-.5-2-1.5-3
+           .5 2-2 2.5-2 1
+           0-1.5 1-2.5 1-4
+           -2 1-4 3-4 6.5Z"/>
+</svg>`,
+
+    brain: `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+     fill="none" stroke="currentColor" stroke-width="2"
+     stroke-linecap="round" stroke-linejoin="round"
+     class="w-6 h-6">
+  <path d="M9 18h6"/>
+  <path d="M10 22h4"/>
+  <path d="M12 2a7 7 0 0 0-7 7v3a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V9a7 7 0 0 0-7-7Z"/>
+</svg>`
+};
+
+
         // Structure des données (exactement comme ton React original)
         const sections = [
             {
                 title: "Phase 1 : J-14 à J-7",
                 subtitle: "L'Affûtage & La Fondation",
-                icon: "⏱️",
+                icon: "heartbeat",
                 proTip: "Le but ici est la fraîcheur. On ne cherche plus à progresser physiquement, mais à arriver reposé et ultra-performant.",
                 categories: [
                     {
@@ -46,7 +87,7 @@ html_code = """
             {
                 title: "Phase 2 : J-6 à J-1",
                 subtitle: "La Semaine Critique",
-                icon: "⚡",
+                icon: "bolt",
                 proTip: "Tout le monde est prêt physiquement. Ceux qui gagnent sont ceux qui optimisent les détails.",
                 categories: [
                     {
@@ -152,7 +193,7 @@ html_code = """
             {
                 title: "Phase 3 : Le Jour J",
                 subtitle: "Avant l'épreuve",
-                icon: "🔥",
+                icon: "flame",
                 proTip: "L'objectif de l'échauffement est l'excitation neuronale, pas la fatigue.",
                 categories: [
                     {
@@ -174,7 +215,7 @@ html_code = """
             {
                 title: "Phase 4 : En Course",
                 subtitle: "Gestion & Entre-runs",
-                icon: "🧠",
+                icon: "brain",
                 proTip: "La différence entre les bons et les champions se joue dans la gestion entre les runs.",
                 categories: [
                     {
@@ -220,7 +261,10 @@ html_code = """
                         onClick: () => setActiveTab(i),
                         className: `flex-1 py-3 rounded-xl flex flex-col items-center transition-all ${activeTab === i ? 'bg-white shadow-md text-red-600 scale-[1.05]' : 'text-gray-300'}`
                     }, 
-                        React.createElement('span', { className: 'text-lg' }, s.icon),
+                        React.createElement('span', {
+                            className: 'mb-1',
+                            dangerouslySetInnerHTML: { __html: ICONS[s.icon] }
+                        }),
                         React.createElement('span', { className: 'text-[8px] mt-1 font-black uppercase' }, `Phase ${i+1}`)
                     ))
                 ),
