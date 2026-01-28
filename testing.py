@@ -292,9 +292,7 @@ html_code = """
                             ),
                             React.createElement('button', {
                                 onClick: (e) => toggleInfo(e, item.id),
-                                className: `px-1.5 py-0.5 text-[9px] rounded leading-none font-bold ${openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'}
-`
-`
+                                className: `px-1.5 py-0.5 text-[9px] rounded leading-none font-bold ${openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-400'}`
                             }, 'ⓘ')
                         ),
                         openDetails[item.id] && React.createElement('div', { className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 leading-relaxed border border-white' },
