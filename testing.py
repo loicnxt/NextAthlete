@@ -173,7 +173,7 @@ html_code = """
                         name: "Suppléments & Logistique",
                         items: [
                             { id: "caf_reset", label: "Arrêt de la Caféine", time: "J-7 à J-2", details: "Se sevrer une semaine avant pour resensibiliser les récepteurs.<br>Ajustement recommandé si grand consommateur de café pour éviter les troubles : Réduire à ≤50 mg/j, pas arrêt total." },
-                            { id: "gear", label: "Maintien Créatine et Beta-Alanine", time: "Quotidien", details: `Si tu en prends déjà, maintenir la dose de croisière.<span class="text-red-600 font-semibold">Ne commence surtout pas maintenant si tu n'en consommes pas.</span>` },
+                            { id: "gear", label: "Maintien Créatine et Beta-Alanine", time: "Quotidien", details: `Si tu en prends déjà, maintenir la dose de croisière.<br><span class="text-red-600 font-semibold">Ne commence surtout pas maintenant si tu n'en consommes pas.</span>` },
                             { id: "gear", label: "Check-up Matériel", time: "J-1", details: "Chaussures, straps, nutrition.\\nRien de nouveau le jour J." }
                         ]
                     }
