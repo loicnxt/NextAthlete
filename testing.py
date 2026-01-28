@@ -317,9 +317,9 @@ html_code = """
     xmlns: "http://www.w3.org/2000/svg",
     fill: "none",
     viewBox: "0 0 24 24",
-    strokeWidth: 1.5,         # ton stroke-width
+    strokeWidth: 1.5,         
     stroke: "currentColor",
-    className: "size-6"       # ton class
+    className: "size-6"       
 },
     React.createElement('path', {
         strokeLinecap: "round",
