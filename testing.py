@@ -284,7 +284,7 @@ html_code = """
                             className: `flex items-center gap-3 p-4 bg-white rounded-2xl border border-white shadow-sm cursor-pointer transition-all ${checkedItems[item.id] ? 'bg-red-50/50 border-red-100' : ''}`
                         },
                             React.createElement('div', { className: `w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${checkedItems[item.id] ? 'bg-red-600 border-red-600' : 'border-slate-200'}` },
-                                checkedItems[item.id] && React.createElement('span', { className: 'text-white text-[10px]' }, '✓')
+                                checkedItems[item.id] && React.createElement('span', { className: 'text-white text-[10px]' }, '✔')
                             ),
                             React.createElement('div', { className: 'flex-1' },
                                 React.createElement('p', { className: 'text-[9px] font-black text-red-500 uppercase' }, item.time),
@@ -293,7 +293,7 @@ html_code = """
                             React.createElement('button', {
                                 onClick: (e) => toggleInfo(e, item.id),
                                 className: `p-2 rounded-lg ${openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-50 text-slate-300'}`
-                            }, 'i')
+                            }, 'ⓘ')
                         ),
                         openDetails[item.id] && React.createElement('div', { className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 leading-relaxed border border-white' },
                             React.createElement('span', { style: { display: 'block', width: '100%' }, dangerouslySetInnerHTML: { __html: item.details } })
