@@ -50,14 +50,15 @@ html_code = """
 
     brain: `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-     fill="none" stroke="currentColor" stroke-width="2"
-     stroke-linecap="round" stroke-linejoin="round"
-     class="w-6 h-6">
-  <path d="M9 18h6"/>
-  <path d="M10 22h4"/>
-  <path d="M12 2a7 7 0 0 0-7 7v3a4 4 0 0 0 4 4h6a4 4 0 0 0 4-4V9a7 7 0 0 0-7-7Z"/>
-</svg>`
-};
+  fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round"
+  class="w-6 h-6">
+  <path d="M8 3a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v2a3 3 0 0 0 3 3"/>
+  <path d="M16 3a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v2a3 3 0 0 1-3 3"/>
+  <path d="M8 3h8"/>
+</svg>
+`
+;
 
 
         // Structure des données (exactement comme ton React original)
