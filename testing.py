@@ -319,30 +319,4 @@ html_code = """
 </html>
 """
 
-components.html(html_code + '''
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        height: auto;
-        overflow: visible;
-        background-color: #ffffff;
-    }
-    .footer-caption-custom {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100vw;
-        text-align: center;
-        font-weight: 900;
-        color: #CBD5E1;
-        font-size: 9px;
-        letter-spacing: 0.3em;
-        background: transparent;
-        z-index: 9999;
-        font-family: 'Inter', sans-serif;
-        margin-bottom: 10px;
-    }
-</style>
-<div class="footer-caption-custom">NEXT ATHLETE PERFORMANCE SYSTEM</div>
-''', height=2000, scrolling=False)
+components.html(html_code, height=2000, scrolling=False)
