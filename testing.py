@@ -263,7 +263,7 @@ html_code = """
                     React.createElement('div', { className: 'flex justify-between items-end mb-2' },
                         React.createElement('div', null,
                             React.createElement('h2', { className: 'text-2xl font-black text-slate-800' }, currentPhase.title),
-                            React.createElement('p', { className: 'text-red-500 font-bold text-[10px] uppercase' }, currentPhase.subtitle)
+                            React.createElement('p', { className: 'text-red-500 font-bold text-[12px] uppercase' }, currentPhase.subtitle)
                         ),
                         React.createElement('span', { className: 'text-xs font-black text-slate-300' }, `${Math.round(progress)}%`)
                     ),
