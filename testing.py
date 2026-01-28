@@ -56,9 +56,8 @@ html_code = """
   <path d="M8 3a3 3 0 0 0-3 3v1a3 3 0 0 0 0 6v2a3 3 0 0 0 3 3"/>
   <path d="M16 3a3 3 0 0 1 3 3v1a3 3 0 0 1 0 6v2a3 3 0 0 1-3 3"/>
   <path d="M8 3h8"/>
-</svg>
-`
-;
+</svg>`
+};
 
 
         // Structure des données (exactement comme ton React original)
