@@ -317,7 +317,7 @@ html_code = """
     `
 }, 'ⓘ')
                         ),
-                        openDetails[item.id] && React.createElement('div', { className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 leading-relaxed border border-white' },
+                        openDetails[item.id] && React.createElement('div', { className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 font-medium leading-relaxed border border-white' },
                             React.createElement('span', { style: { display: 'block', width: '100%' }, dangerouslySetInnerHTML: { __html: item.details } })
                         )
                     ))
