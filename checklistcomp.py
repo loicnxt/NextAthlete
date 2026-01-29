@@ -194,10 +194,13 @@ html_code = """
                         ]
                     },
                     {
-                        name: "Warm-up",
+                        name: "Échauffement (Warm-up)",
                         items: [
-                            { id: "pap", label: "PAP Musculaire", time: "H-15m", details: "Contractions max très brèves.\\nIntensité max, volume bas." },
-                            { id: "vest", label: "Veste thermique", time: "Dép.", details: "Garder le corps au chaud jusqu'au signal." }
+                            { id: "racs", label: "RACs Full-Body", time: "H-30m", details: "Échauffement articulaire complet." },
+                            { id: "pap_cap", label: "PAP Capsulaire", time: "H-15m", details: `Effort max sur contraction PAILs (Flexion d'épaule et Rotation externe d'épaule + fonction spécifique).<br><span class="text-red-600 font-semibold">Attention : Volume minimal pour ne pas cramer le système nerveux.</span>` },
+                            { id: "plio", label: "Pliométrie extensive", time: "H-10m", details: "Volume sans aller à la fatigue sur des sauts d'intensité basse/moyenne." },
+                            { id: "pap", label: "PAP Musculaire, Sprints et sauts", time: "H-5m", details: "Intensité max, volume bas." },
+                            { id: "vest", label: "Veste thermique", time: "Départ", details: "Garder le corps au chaud jusqu'au signal." }
                         ]
                     }
                 ]
@@ -209,12 +212,20 @@ html_code = """
                 proTip: "La différence entre les bons et les champions se joue dans la gestion entre les runs.",
                 categories: [
                     {
-                        name: "Protocole",
+                        name: "Protocole Entre 2 Runs",
                         items: [
-                            { id: "recov", label: "Récup Active", time: "H+2m", details: "Marche active.\\nNe t'assois pas.\\nRespire par le nez." },
-                            { id: "rinse", label: "Relance (Rinçage)", time: "H-5m", details: "Rinçage de bouche sucré (recracher) pour stimuler le cerveau." }
+                            { id: "recov", label: "Récupération Active", time: "H + 2m", details: "Marche active. Ne t'assois pas.<br>Respire par le nez pour faire redescendre le rythme cardiaque." },
+                            { id: "hydrat", label: "Hydratation", time: "H + 5m", details: `Bois 200-300ml d'eau avec des électrolytes.<br>Si tu n'en as pas, une eau minérale type Vichy Célestins est parfaite.<br><span class="text-red-600 font-semibold">Attention pour la Vichy si estomac sensible.` },
+                            { id: "refuel", label: "Apport Énergie", time: "H + 10m", details: "Si tu te sens vide : Une demi-banane ou une petite gorgée de miel dilué avec de l'eau.<br>Si tu te sens bien : Ne mange rien de solide." },
+                            { id: "rinse", label: "Relance", time: "H - 5m", details: "Un dernier rinçage de bouche avec une boisson sucrée (dilué à l'eau), puis recrache si possible.<br>Remets-toi en mouvement (petits sauts, rotations articulaires)." }
                         ]
-                    }
+                    },
+                     {
+                        name: "Mental In-Game",
+                        items: [
+                            { id: "selftalk", label: "Self-Talk Positif", time: "Pendant", details: "Dialogue interne instructif.<br>Focus sur les consignes techniques et l'instant présent plutôt que sur le résultat final." }
+                        ]
+                    },
                 ]
             }
         ];
