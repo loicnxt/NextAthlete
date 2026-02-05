@@ -20,7 +20,7 @@ html_code = """
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #f8fafc; 
+            background-color: #ffffff; 
             margin: 0;
             padding: 0;
         }
@@ -164,7 +164,7 @@ html_code = """
                     React.createElement('p', { className: 'mt-3 text-[9px] font-black text-slate-300 uppercase tracking-[0.4em] opacity-80' }, 'NEXT ATHLETE PERFORMANCE SYSTEM')
                 ),
 
-                React.createElement('div', { className: 'flex justify-between mb-8 bg-white/60 backdrop-blur-xl p-1.5 rounded-2xl border border-white shadow-sm' },
+                React.createElement('div', { className: 'flex justify-between mb-8 bg-white/90 backdrop-blur-xl p-1.5 rounded-2xl border-2 border-slate-200 shadow-sm' },
                     sections.map((s, i) => React.createElement('button', {
                         key: i,
                         onClick: () => setActiveTab(i),
@@ -193,7 +193,7 @@ html_code = """
                     cat.items.map(item => React.createElement('div', { key: item.id, className: 'mb-2' },
                         React.createElement('div', { 
                             onClick: () => setCheckedItems(prev => ({ ...prev, [item.id]: !prev[item.id] })),
-                            className: 'flex items-center gap-3 p-4 bg-white rounded-2xl border border-white shadow-sm cursor-pointer transition-all ' + (checkedItems[item.id] ? 'bg-red-50/50 border-red-100' : '')
+                            className: 'flex items-center gap-3 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm cursor-pointer transition-all ' + (checkedItems[item.id] ? 'bg-red-50/50 border-red-200' : '')
                         },
                             React.createElement('div', { className: 'w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ' + (checkedItems[item.id] ? 'bg-red-600 border-red-600' : 'border-slate-200') },
                                 checkedItems[item.id] && React.createElement('span', { className: 'text-white text-[10px]' }, '✔')
@@ -208,7 +208,7 @@ html_code = """
                             }, 'ⓘ')
                         ),
                         openDetails[item.id] && React.createElement('div', { 
-                            className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 font-medium leading-relaxed border border-white',
+                            className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 font-medium leading-relaxed border-2 border-slate-200',
                             dangerouslySetInnerHTML: { __html: item.details }
                         })
                     ))
@@ -261,13 +261,14 @@ html_code = """
             return React.createElement('div', { className: 'max-w-md mx-auto p-4 pb-20' },
                 React.createElement('header', { className: 'mb-6 text-center' },
                     React.createElement('h1', { className: 'text-3xl font-black text-red-600 italic tracking-tighter' }, 'CALCULATEUR 1RM.'),
+                    React.createElement('h2', { className: 'text-sm font-bold text-slate-400 uppercase tracking-[0.3em]' }, 'One Rep Max'),
                     React.createElement('p', { className: 'mt-3 text-[9px] font-black text-slate-300 uppercase tracking-[0.4em] opacity-80' }, 'NEXT ATHLETE PERFORMANCE SYSTEM')
                 ),
 
                 React.createElement('div', { className: 'mb-6' },
                     React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest text-slate-400 mb-3 px-2' }, "Détails de l'exercice"),
                     
-                    React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border border-white shadow-sm' },
+                    React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
                         React.createElement('label', { className: 'block text-[9px] font-black text-red-500 uppercase mb-2' }, "Type d'exercice"),
                         React.createElement('div', { className: 'flex gap-2' },
                             ['weights', 'bodyweight', 'pushups'].map(type => {
@@ -282,36 +283,36 @@ html_code = """
                         )
                     ),
 
-                    React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border border-white shadow-sm' },
+                    React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
                         React.createElement('label', { className: 'block text-[9px] font-black text-red-500 uppercase mb-2' }, 'Charge soulevée (kg)'),
                         React.createElement('input', {
                             type: 'number',
                             value: weight,
                             onChange: (e) => setWeight(e.target.value),
                             placeholder: '0',
-                            className: 'w-full p-3 text-2xl font-black text-slate-800 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-red-600 focus:outline-none transition-all'
+                            className: 'w-full p-3 text-2xl font-black text-slate-800 bg-slate-100 rounded-xl border-2 border-slate-200 focus:border-red-600 focus:outline-none transition-all placeholder:text-slate-400'
                         })
                     ),
 
-                    (exerciseType === 'bodyweight' || exerciseType === 'pushups') && React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border border-white shadow-sm' },
+                    (exerciseType === 'bodyweight' || exerciseType === 'pushups') && React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
                         React.createElement('label', { className: 'block text-[9px] font-black text-red-500 uppercase mb-2' }, 'Poids de corps (kg)'),
                         React.createElement('input', {
                             type: 'number',
                             value: bodyweight,
                             onChange: (e) => setBodyweight(e.target.value),
                             placeholder: '0',
-                            className: 'w-full p-3 text-2xl font-black text-slate-800 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-red-600 focus:outline-none transition-all'
+                            className: 'w-full p-3 text-2xl font-black text-slate-800 bg-slate-100 rounded-xl border-2 border-slate-200 focus:border-red-600 focus:outline-none transition-all placeholder:text-slate-400'
                         })
                     ),
 
-                    React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border border-white shadow-sm' },
+                    React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
                         React.createElement('label', { className: 'block text-[9px] font-black text-red-500 uppercase mb-2' }, 'Répétitions effectuées'),
                         React.createElement('input', {
                             type: 'number',
                             value: reps,
                             onChange: (e) => setReps(e.target.value),
                             placeholder: '0',
-                            className: 'w-full p-3 text-2xl font-black text-slate-800 bg-slate-50 rounded-xl border-2 border-slate-100 focus:border-red-600 focus:outline-none transition-all'
+                            className: 'w-full p-3 text-2xl font-black text-slate-800 bg-slate-100 rounded-xl border-2 border-slate-200 focus:border-red-600 focus:outline-none transition-all placeholder:text-slate-400'
                         })
                     ),
 
@@ -325,9 +326,9 @@ html_code = """
                     React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest text-slate-400 mb-3 px-2' }, 'Pourcentages du 1RM'),
                     React.createElement('div', { className: 'grid grid-cols-2 gap-2' },
                         percentages.map(pct => 
-                            React.createElement('div', { key: pct, className: 'p-4 bg-white rounded-2xl border border-white shadow-sm' },
+                            React.createElement('div', { key: pct, className: 'p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
                                 React.createElement('p', { className: 'text-[9px] font-black text-red-500 uppercase' }, pct + '%'),
-                                React.createElement('p', { className: 'text-xl font-black text-slate-800' }, (oneRM * pct / 100).toFixed(1) + ' kg')
+                                React.createElement('p', { className: 'text-xl font-black text-slate-800' }, Math.round(oneRM * pct / 100) + ' kg')
                             )
                         )
                     )
@@ -335,25 +336,28 @@ html_code = """
 
                 oneRM > 0 && React.createElement('div', { className: 'mb-6' },
                     React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest text-slate-400 mb-3 px-2' }, 'Table de référence RPE'),
-                    React.createElement('div', { className: 'bg-white rounded-2xl border border-white shadow-sm overflow-hidden' },
+                    React.createElement('div', { className: 'bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden' },
                         React.createElement('div', { className: 'overflow-x-auto' },
                             React.createElement('table', { className: 'w-full text-[10px]' },
                                 React.createElement('thead', null,
                                     React.createElement('tr', { className: 'bg-red-50 text-red-800' },
-                                        React.createElement('th', { className: 'p-2 font-bold text-left sticky left-0 bg-red-50' }, 'RPE'),
+                                        React.createElement('th', { className: 'p-3 font-bold text-left sticky left-0 bg-red-50 z-10' }, 'RPE'),
                                         ...Array.from({length: 12}, (_, i) => 
-                                            React.createElement('th', { key: i, className: 'p-2 font-bold text-center' }, i + 1)
+                                            React.createElement('th', { key: i, className: 'p-3 font-bold text-center min-w-[60px]' }, 'x' + (i + 1))
                                         )
                                     )
                                 ),
                                 React.createElement('tbody', null,
-                                    Object.entries(rpeData).map(([rpe, values]) =>
-                                        React.createElement('tr', { key: rpe, className: 'border-t border-slate-100' },
-                                            React.createElement('td', { className: 'p-2 font-bold text-slate-700 sticky left-0 bg-white' }, rpe),
+                                    Object.entries(rpeData).reverse().map(([rpe, values], rowIndex) =>
+                                        React.createElement('tr', { 
+                                            key: rpe, 
+                                            className: 'border-t border-slate-100 ' + (rowIndex % 2 === 0 ? 'bg-slate-50' : 'bg-white')
+                                        },
+                                            React.createElement('td', { className: 'p-3 font-bold text-slate-700 sticky left-0 z-10 ' + (rowIndex % 2 === 0 ? 'bg-slate-50' : 'bg-white') }, rpe),
                                             ...values.map((pct, idx) =>
-                                                React.createElement('td', { key: idx, className: 'p-2 text-center' },
+                                                React.createElement('td', { key: idx, className: 'p-3 text-center' },
                                                     React.createElement('div', null,
-                                                        React.createElement('div', { className: 'font-bold text-slate-800' }, (oneRM * pct / 100).toFixed(0)),
+                                                        React.createElement('div', { className: 'font-bold text-slate-800' }, (oneRM * pct / 100).toFixed(1)),
                                                         React.createElement('div', { className: 'text-[8px] text-slate-400' }, pct + '%')
                                                     )
                                                 )
@@ -371,12 +375,12 @@ html_code = """
         function App() {
             const [currentTool, setCurrentTool] = useState('checklist');
 
-            return React.createElement('div', { className: 'min-h-screen' },
+            return React.createElement('div', { className: 'min-h-screen bg-white' },
                 React.createElement('div', { className: 'max-w-md mx-auto p-4 pt-6' },
                     React.createElement('select', {
                         value: currentTool,
                         onChange: (e) => setCurrentTool(e.target.value),
-                        className: 'w-full p-4 text-sm font-bold text-slate-800 bg-white rounded-2xl border border-white shadow-sm focus:outline-none focus:ring-2 focus:ring-red-600 cursor-pointer'
+                        className: 'w-full p-4 text-sm font-bold text-slate-800 bg-white rounded-2xl border-2 border-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 cursor-pointer transition-all'
                     },
                         React.createElement('option', { value: 'checklist' }, '📋 Competition Ready Checklist'),
                         React.createElement('option', { value: '1rm' }, '💪 Calculateur 1RM')
