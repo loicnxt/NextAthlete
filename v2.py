@@ -23,8 +23,15 @@ html_code = """
             background-color: #ffffff; 
             margin: 0;
             padding: 0;
+            transition: background-color 0.3s ease;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+        
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #0f172a;
+            }
+        }
     </style>
 </head>
 <body>
@@ -34,7 +41,7 @@ html_code = """
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
     <script>
-        const { useState } = React;
+        const { useState, useEffect } = React;
 
         const ICONS = {
             heartbeat: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
@@ -136,19 +143,45 @@ html_code = """
             }
         ];
 
-        const rpeData = {
-            10: [100, 96, 92, 89, 86, 84, 81, 79, 77, 75, 73, 71],
-            9.5: [98, 94, 91, 88, 85, 82, 80, 78, 76, 74, 72, 70],
-            9: [96, 92, 89, 86, 84, 81, 79, 77, 75, 73, 71, 69],
-            8.5: [94, 91, 88, 85, 82, 80, 78, 76, 74, 72, 70, 68],
-            8: [92, 89, 86, 84, 81, 79, 77, 75, 73, 71, 69, 67],
-            7.5: [91, 88, 85, 82, 80, 78, 76, 74, 72, 70, 68, 66],
-            7: [89, 86, 84, 81, 79, 77, 75, 73, 71, 69, 67, 65],
-            6.5: [88, 85, 82, 80, 78, 76, 74, 72, 70, 68, 66, 64],
-            6: [86, 84, 81, 79, 77, 75, 73, 71, 69, 67, 65, 63]
+        const rpeData = [
+            { rpe: 10, values: [100, 96, 92, 89, 86, 84, 81, 79, 77, 75, 73, 71] },
+            { rpe: 9.5, values: [98, 94, 91, 88, 85, 82, 80, 78, 76, 74, 72, 70] },
+            { rpe: 9, values: [96, 92, 89, 86, 84, 81, 79, 77, 75, 73, 71, 69] },
+            { rpe: 8.5, values: [94, 91, 88, 85, 82, 80, 78, 76, 74, 72, 70, 68] },
+            { rpe: 8, values: [92, 89, 86, 84, 81, 79, 77, 75, 73, 71, 69, 67] },
+            { rpe: 7.5, values: [91, 88, 85, 82, 80, 78, 76, 74, 72, 70, 68, 66] },
+            { rpe: 7, values: [89, 86, 84, 81, 79, 77, 75, 73, 71, 69, 67, 65] },
+            { rpe: 6.5, values: [88, 85, 82, 80, 78, 76, 74, 72, 70, 68, 66, 64] },
+            { rpe: 6, values: [86, 84, 81, 79, 77, 75, 73, 71, 69, 67, 65, 63] }
+        ];
+
+        const getRPEColor = (rpe, isDark) => {
+            const lightColors = {
+                10: 'bg-red-100 text-red-800',
+                9.5: 'bg-red-50 text-red-700',
+                9: 'bg-orange-100 text-orange-800',
+                8.5: 'bg-orange-50 text-orange-700',
+                8: 'bg-amber-100 text-amber-800',
+                7.5: 'bg-amber-50 text-amber-700',
+                7: 'bg-yellow-100 text-yellow-800',
+                6.5: 'bg-yellow-50 text-yellow-700',
+                6: 'bg-lime-100 text-lime-800'
+            };
+            const darkColors = {
+                10: 'bg-red-900/50 text-red-300',
+                9.5: 'bg-red-800/50 text-red-200',
+                9: 'bg-orange-900/50 text-orange-300',
+                8.5: 'bg-orange-800/50 text-orange-200',
+                8: 'bg-amber-900/50 text-amber-300',
+                7.5: 'bg-amber-800/50 text-amber-200',
+                7: 'bg-yellow-900/50 text-yellow-300',
+                6.5: 'bg-yellow-800/50 text-yellow-200',
+                6: 'bg-lime-900/50 text-lime-300'
+            };
+            return isDark ? (darkColors[rpe] || 'bg-slate-700 text-slate-300') : (lightColors[rpe] || 'bg-slate-100 text-slate-800');
         };
 
-        function ChecklistApp() {
+        function ChecklistApp({ isDark }) {
             const [activeTab, setActiveTab] = useState(0);
             const [checkedItems, setCheckedItems] = useState({});
             const [openDetails, setOpenDetails] = useState({});
@@ -160,15 +193,18 @@ html_code = """
             return React.createElement('div', { className: 'max-w-md mx-auto p-4 pb-20' },
                 React.createElement('header', { className: 'mb-6 text-center' },
                     React.createElement('h1', { className: 'text-3xl font-black text-red-600 italic tracking-tighter' }, 'COMPETITION READY.'),
-                    React.createElement('h2', { className: 'text-sm font-bold text-slate-400 uppercase tracking-[0.3em]' }, 'Checklist'),
-                    React.createElement('p', { className: 'mt-3 text-[9px] font-black text-slate-300 uppercase tracking-[0.4em] opacity-80' }, 'NEXT ATHLETE PERFORMANCE SYSTEM')
+                    React.createElement('h2', { className: 'text-sm font-bold uppercase tracking-[0.3em] ' + (isDark ? 'text-slate-500' : 'text-slate-400') }, 'Checklist'),
+                    React.createElement('p', { className: 'mt-3 text-[9px] font-black uppercase tracking-[0.4em] opacity-80 ' + (isDark ? 'text-slate-600' : 'text-slate-300') }, 'NEXT ATHLETE PERFORMANCE SYSTEM')
                 ),
 
-                React.createElement('div', { className: 'flex justify-between mb-8 bg-white/90 backdrop-blur-xl p-1.5 rounded-2xl border-2 border-slate-200 shadow-sm' },
+                React.createElement('div', { className: 'flex justify-between mb-8 backdrop-blur-xl p-1.5 rounded-2xl border-2 shadow-sm ' + (isDark ? 'bg-slate-800/90 border-slate-700' : 'bg-white/90 border-slate-200') },
                     sections.map((s, i) => React.createElement('button', {
                         key: i,
                         onClick: () => setActiveTab(i),
-                        className: 'flex-1 py-3 rounded-xl flex flex-col items-center transition-all ' + (activeTab === i ? 'bg-white shadow-md text-red-600 scale-[1.05]' : 'text-gray-300')
+                        className: 'flex-1 py-3 rounded-xl flex flex-col items-center transition-all ' + 
+                            (activeTab === i 
+                                ? (isDark ? 'bg-slate-700 shadow-md text-red-500 scale-[1.05]' : 'bg-white shadow-md text-red-600 scale-[1.05]')
+                                : (isDark ? 'text-slate-500' : 'text-gray-300'))
                     }, 
                         React.createElement('span', { className: 'mb-1', dangerouslySetInnerHTML: { __html: ICONS[s.icon] } }),
                         React.createElement('span', { className: 'text-[8px] mt-1 font-black uppercase' }, 'Phase ' + (i+1))
@@ -178,43 +214,68 @@ html_code = """
                 React.createElement('div', { className: 'mb-6 px-2' },
                     React.createElement('div', { className: 'flex justify-between items-end mb-2' },
                         React.createElement('div', null,
-                            React.createElement('h2', { className: 'text-2xl font-black text-slate-800' }, currentPhase.title),
+                            React.createElement('h2', { className: 'text-2xl font-black ' + (isDark ? 'text-slate-100' : 'text-slate-800') }, currentPhase.title),
                             React.createElement('p', { className: 'text-red-500 font-bold text-[12px] uppercase' }, currentPhase.subtitle)
                         ),
-                        React.createElement('span', { className: 'text-xs font-black text-slate-300' }, Math.round(progress) + '%')
+                        React.createElement('span', { className: 'text-xs font-black ' + (isDark ? 'text-slate-600' : 'text-slate-300') }, Math.round(progress) + '%')
                     ),
-                    React.createElement('div', { className: 'w-full bg-slate-200 h-1.5 rounded-full overflow-hidden' },
+                    React.createElement('div', { className: 'w-full rounded-full overflow-hidden ' + (isDark ? 'bg-slate-700' : 'bg-slate-200'), style: { height: '6px' } },
                         React.createElement('div', { className: 'h-full bg-red-600 transition-all duration-700', style: { width: progress + '%' } })
                     )
                 ),
 
                 currentPhase.categories.map((cat, idx) => React.createElement('div', { key: idx, className: 'mb-6' },
-                    React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest text-slate-400 mb-3 px-2' }, cat.name),
+                    React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest mb-3 px-2 ' + (isDark ? 'text-slate-500' : 'text-slate-400') }, cat.name),
                     cat.items.map(item => React.createElement('div', { key: item.id, className: 'mb-2' },
                         React.createElement('div', { 
-                            onClick: () => setCheckedItems(prev => ({ ...prev, [item.id]: !prev[item.id] })),
-                            className: 'flex items-center gap-3 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm cursor-pointer transition-all ' + (checkedItems[item.id] ? 'bg-red-50/50 border-red-200' : '')
+                            className: 'rounded-2xl border-2 shadow-sm overflow-hidden transition-all ' + 
+                                (isDark 
+                                    ? (checkedItems[item.id] ? 'bg-slate-800 border-red-900' : 'bg-slate-800 border-slate-700')
+                                    : (checkedItems[item.id] ? 'bg-white border-red-200' : 'bg-white border-slate-200'))
                         },
-                            React.createElement('div', { className: 'w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ' + (checkedItems[item.id] ? 'bg-red-600 border-red-600' : 'border-slate-200') },
-                                checkedItems[item.id] && React.createElement('span', { className: 'text-white text-[10px]' }, '✔')
+                            React.createElement('div', { 
+                                onClick: () => setOpenDetails(prev => ({ ...prev, [item.id]: !prev[item.id] })),
+                                className: 'flex items-center gap-3 p-4 cursor-pointer transition-all ' + 
+                                    (checkedItems[item.id] && !isDark ? 'bg-red-50/50' : '')
+                            },
+                                React.createElement('div', { 
+                                    onClick: (e) => { e.stopPropagation(); setCheckedItems(prev => ({ ...prev, [item.id]: !prev[item.id] })); },
+                                    className: 'w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 cursor-pointer transition-all ' + 
+                                        (checkedItems[item.id] 
+                                            ? 'bg-red-600 border-red-600' 
+                                            : (isDark ? 'border-slate-600 hover:border-red-500' : 'border-slate-300 hover:border-red-400'))
+                                },
+                                    checkedItems[item.id] && React.createElement('span', { className: 'text-white text-[10px]' }, '✔')
+                                ),
+                                React.createElement('div', { className: 'flex-1' },
+                                    React.createElement('p', { className: 'text-[9px] font-black text-red-500 uppercase' }, item.time),
+                                    React.createElement('p', { className: 'text-sm font-bold ' + 
+                                        (checkedItems[item.id] 
+                                            ? 'text-red-600' 
+                                            : (isDark ? 'text-slate-200' : 'text-slate-800'))
+                                    }, item.label)
+                                ),
+                                React.createElement('div', { className: 'transition-transform ' + (openDetails[item.id] ? 'rotate-180' : '') + (isDark ? ' text-slate-500' : ' text-slate-400') },
+                                    React.createElement('svg', { className: 'w-4 h-4', fill: 'none', stroke: 'currentColor', viewBox: '0 0 24 24' },
+                                        React.createElement('path', { strokeLinecap: 'round', strokeLinejoin: 'round', strokeWidth: 2, d: 'M19 9l-7 7-7-7' })
+                                    )
+                                )
                             ),
-                            React.createElement('div', { className: 'flex-1' },
-                                React.createElement('p', { className: 'text-[9px] font-black text-red-500 uppercase' }, item.time),
-                                React.createElement('p', { className: 'text-sm font-bold ' + (checkedItems[item.id] ? 'text-red-700' : 'text-slate-800') }, item.label)
-                            ),
-                            React.createElement('button', {
-                                onClick: (e) => { e.stopPropagation(); setOpenDetails(prev => ({ ...prev, [item.id]: !prev[item.id] })); },
-                                className: 'p-1.5 text-[11px] leading-none rounded-lg transition-all ' + (openDetails[item.id] ? 'bg-red-600 text-white' : 'bg-slate-50 text-slate-300')
-                            }, 'ⓘ')
-                        ),
-                        openDetails[item.id] && React.createElement('div', { 
-                            className: 'mt-1 p-4 bg-white/50 rounded-2xl text-[11px] text-slate-600 font-medium leading-relaxed border-2 border-slate-200',
-                            dangerouslySetInnerHTML: { __html: item.details }
-                        })
+                            React.createElement('div', { 
+                                className: 'transition-all duration-300 ease-in-out overflow-hidden ' + (openDetails[item.id] ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'),
+                                style: { transitionProperty: 'max-height, opacity' }
+                            },
+                                React.createElement('div', { 
+                                    className: 'px-4 pb-4 pt-2 text-[11px] font-medium leading-relaxed border-t ' + 
+                                        (isDark ? 'text-slate-400 border-slate-700' : 'text-slate-600 border-slate-100'),
+                                    dangerouslySetInnerHTML: { __html: item.details }
+                                })
+                            )
+                        )
                     ))
                 )),
 
-                React.createElement('div', { className: 'mt-8 p-5 bg-white rounded-3xl border border-slate-100 shadow-xl flex gap-4' },
+                React.createElement('div', { className: 'mt-8 p-5 rounded-3xl border shadow-xl flex gap-4 ' + (isDark ? 'bg-slate-800 border-slate-700' : 'bg-white border-slate-100') },
                     React.createElement('div', { className: 'bg-red-600 p-2 rounded-2xl text-white shadow-lg shadow-red-100 self-start' },
                         React.createElement('svg', {
                             xmlns: "http://www.w3.org/2000/svg",
@@ -231,13 +292,13 @@ html_code = """
                     ),
                     React.createElement('div', null,
                         React.createElement('h4', { className: 'font-black text-[10px] uppercase text-red-600', style: { letterSpacing: '0.2em' } }, 'Conseil Pro Phase ' + (activeTab+1)),
-                        React.createElement('p', { className: 'text-[11px] font-bold text-slate-700 italic mt-1' }, '"' + currentPhase.proTip + '"')
+                        React.createElement('p', { className: 'text-[11px] font-bold italic mt-1 ' + (isDark ? 'text-slate-300' : 'text-slate-700') }, '"' + currentPhase.proTip + '"')
                     )
                 )
             );
         }
 
-        function OneRMCalculator() {
+        function OneRMCalculator({ isDark }) {
             const [weight, setWeight] = useState('');
             const [bodyweight, setBodyweight] = useState('');
             const [reps, setReps] = useState('');
@@ -258,17 +319,24 @@ html_code = """
             const oneRM = calculate1RM();
             const percentages = [95, 90, 85, 80, 75, 70, 65, 60, 50, 40, 30, 20, 10];
 
+            const cardBg = isDark ? 'bg-slate-800' : 'bg-white';
+            const cardBorder = isDark ? 'border-slate-700' : 'border-slate-200';
+            const textPrimary = isDark ? 'text-slate-100' : 'text-slate-800';
+            const textSecondary = isDark ? 'text-slate-500' : 'text-slate-400';
+            const inputBg = isDark ? 'bg-slate-700' : 'bg-slate-100';
+            const inputBorder = isDark ? 'border-slate-600' : 'border-slate-200';
+            const inputText = isDark ? 'text-slate-100' : 'text-slate-800';
+
             return React.createElement('div', { className: 'max-w-md mx-auto p-4 pb-20' },
                 React.createElement('header', { className: 'mb-6 text-center' },
                     React.createElement('h1', { className: 'text-3xl font-black text-red-600 italic tracking-tighter' }, 'CALCULATEUR 1RM.'),
-                    React.createElement('h2', { className: 'text-sm font-bold text-slate-400 uppercase tracking-[0.3em]' }, 'One Rep Max'),
-                    React.createElement('p', { className: 'mt-3 text-[9px] font-black text-slate-300 uppercase tracking-[0.4em] opacity-80' }, 'NEXT ATHLETE PERFORMANCE SYSTEM')
+                    React.createElement('p', { className: 'mt-3 text-[9px] font-black uppercase tracking-[0.4em] opacity-80 ' + textSecondary }, 'NEXT ATHLETE PERFORMANCE SYSTEM')
                 ),
 
                 React.createElement('div', { className: 'mb-6' },
-                    React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest text-slate-400 mb-3 px-2' }, "Détails de l'exercice"),
+                    React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest mb-3 px-2 ' + textSecondary }, "Détails de l'exercice"),
                     
-                    React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
+                    React.createElement('div', { className: 'mb-4 p-4 rounded-2xl border-2 shadow-sm ' + cardBg + ' ' + cardBorder },
                         React.createElement('label', { className: 'block text-[9px] font-black text-red-500 uppercase mb-2' }, "Type d'exercice"),
                         React.createElement('div', { className: 'flex gap-2' },
                             ['weights', 'bodyweight', 'pushups'].map(type => {
@@ -277,42 +345,47 @@ html_code = """
                                     key: type,
                                     onClick: () => setExerciseType(type),
                                     className: 'flex-1 py-2 px-3 rounded-xl text-[10px] font-bold transition-all ' + 
-                                        (exerciseType === type ? 'bg-red-600 text-white shadow-md' : 'bg-slate-50 text-slate-400')
+                                        (exerciseType === type 
+                                            ? 'bg-red-600 text-white shadow-md' 
+                                            : (isDark ? 'bg-slate-700 text-slate-400' : 'bg-slate-50 text-slate-400'))
                                 }, labels[type]);
                             })
                         )
                     ),
 
-                    React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
+                    React.createElement('div', { className: 'mb-4 p-4 rounded-2xl border-2 shadow-sm ' + cardBg + ' ' + cardBorder },
                         React.createElement('label', { className: 'block text-[9px] font-black text-red-500 uppercase mb-2' }, 'Charge soulevée (kg)'),
                         React.createElement('input', {
                             type: 'number',
                             value: weight,
                             onChange: (e) => setWeight(e.target.value),
                             placeholder: '0',
-                            className: 'w-full p-3 text-2xl font-black text-slate-800 bg-slate-100 rounded-xl border-2 border-slate-200 focus:border-red-600 focus:outline-none transition-all placeholder:text-slate-400'
+                            className: 'w-full p-3 text-2xl font-black rounded-xl border-2 focus:border-red-600 focus:outline-none transition-all placeholder:text-slate-400 ' + 
+                                inputBg + ' ' + inputBorder + ' ' + inputText
                         })
                     ),
 
-                    (exerciseType === 'bodyweight' || exerciseType === 'pushups') && React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
+                    (exerciseType === 'bodyweight' || exerciseType === 'pushups') && React.createElement('div', { className: 'mb-4 p-4 rounded-2xl border-2 shadow-sm ' + cardBg + ' ' + cardBorder },
                         React.createElement('label', { className: 'block text-[9px] font-black text-red-500 uppercase mb-2' }, 'Poids de corps (kg)'),
                         React.createElement('input', {
                             type: 'number',
                             value: bodyweight,
                             onChange: (e) => setBodyweight(e.target.value),
                             placeholder: '0',
-                            className: 'w-full p-3 text-2xl font-black text-slate-800 bg-slate-100 rounded-xl border-2 border-slate-200 focus:border-red-600 focus:outline-none transition-all placeholder:text-slate-400'
+                            className: 'w-full p-3 text-2xl font-black rounded-xl border-2 focus:border-red-600 focus:outline-none transition-all placeholder:text-slate-400 ' + 
+                                inputBg + ' ' + inputBorder + ' ' + inputText
                         })
                     ),
 
-                    React.createElement('div', { className: 'mb-4 p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
+                    React.createElement('div', { className: 'mb-4 p-4 rounded-2xl border-2 shadow-sm ' + cardBg + ' ' + cardBorder },
                         React.createElement('label', { className: 'block text-[9px] font-black text-red-500 uppercase mb-2' }, 'Répétitions effectuées'),
                         React.createElement('input', {
                             type: 'number',
                             value: reps,
                             onChange: (e) => setReps(e.target.value),
                             placeholder: '0',
-                            className: 'w-full p-3 text-2xl font-black text-slate-800 bg-slate-100 rounded-xl border-2 border-slate-200 focus:border-red-600 focus:outline-none transition-all placeholder:text-slate-400'
+                            className: 'w-full p-3 text-2xl font-black rounded-xl border-2 focus:border-red-600 focus:outline-none transition-all placeholder:text-slate-400 ' + 
+                                inputBg + ' ' + inputBorder + ' ' + inputText
                         })
                     ),
 
@@ -323,42 +396,65 @@ html_code = """
                 ),
 
                 oneRM > 0 && React.createElement('div', { className: 'mb-6' },
-                    React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest text-slate-400 mb-3 px-2' }, 'Pourcentages du 1RM'),
+                    React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest mb-3 px-2 ' + textSecondary }, 'Pourcentages du 1RM'),
                     React.createElement('div', { className: 'grid grid-cols-2 gap-2' },
-                        percentages.map(pct => 
-                            React.createElement('div', { key: pct, className: 'p-4 bg-white rounded-2xl border-2 border-slate-200 shadow-sm' },
+                        percentages.map(pct => {
+                            const targetWeight = oneRM * pct / 100;
+                            let displayWeight = targetWeight;
+                            let showBodyweight = false;
+                            
+                            if (exerciseType === 'bodyweight') {
+                                displayWeight = targetWeight - (0.9348 * parseFloat(bodyweight || 0));
+                                showBodyweight = true;
+                            } else if (exerciseType === 'pushups') {
+                                displayWeight = targetWeight - (0.75 * parseFloat(bodyweight || 0));
+                                showBodyweight = true;
+                            }
+                            
+                            return React.createElement('div', { key: pct, className: 'p-4 rounded-2xl border-2 shadow-sm ' + cardBg + ' ' + cardBorder },
                                 React.createElement('p', { className: 'text-[9px] font-black text-red-500 uppercase' }, pct + '%'),
-                                React.createElement('p', { className: 'text-xl font-black text-slate-800' }, Math.round(oneRM * pct / 100) + ' kg')
-                            )
-                        )
+                                React.createElement('p', { className: 'text-xl font-black ' + textPrimary }, Math.round(displayWeight) + ' kg'),
+                                showBodyweight && React.createElement('p', { className: 'text-[8px] mt-1 ' + textSecondary }, '(+' + Math.round(parseFloat(bodyweight || 0)) + 'kg)')
+                            );
+                        })
                     )
                 ),
 
                 oneRM > 0 && React.createElement('div', { className: 'mb-6' },
-                    React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest text-slate-400 mb-3 px-2' }, 'Table de référence RPE'),
-                    React.createElement('div', { className: 'bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden' },
+                    React.createElement('h3', { className: 'font-black text-[10px] uppercase tracking-widest mb-3 px-2 ' + textSecondary }, 'Table de référence RPE'),
+                    React.createElement('div', { className: 'rounded-2xl border shadow-sm overflow-hidden ' + cardBg + ' ' + cardBorder },
                         React.createElement('div', { className: 'overflow-x-auto' },
                             React.createElement('table', { className: 'w-full text-[10px]' },
                                 React.createElement('thead', null,
-                                    React.createElement('tr', { className: 'bg-red-50 text-red-800' },
-                                        React.createElement('th', { className: 'p-3 font-bold text-left sticky left-0 bg-red-50 z-10' }, 'RPE'),
+                                    React.createElement('tr', { className: 'bg-red-50 text-red-800 ' + (isDark && 'bg-red-900/30 text-red-300') },
+                                        React.createElement('th', { className: 'p-3 font-bold text-left sticky left-0 z-10 ' + (isDark ? 'bg-red-900/30' : 'bg-red-50') }, 'RPE'),
                                         ...Array.from({length: 12}, (_, i) => 
                                             React.createElement('th', { key: i, className: 'p-3 font-bold text-center min-w-[60px]' }, 'x' + (i + 1))
                                         )
                                     )
                                 ),
                                 React.createElement('tbody', null,
-                                    Object.entries(rpeData).reverse().map(([rpe, values], rowIndex) =>
+                                    rpeData.map((row, rowIndex) =>
                                         React.createElement('tr', { 
-                                            key: rpe, 
-                                            className: 'border-t border-slate-100 ' + (rowIndex % 2 === 0 ? 'bg-slate-50' : 'bg-white')
+                                            key: row.rpe, 
+                                            className: 'border-t ' + 
+                                                (isDark 
+                                                    ? (rowIndex % 2 === 0 ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-800 border-slate-700')
+                                                    : (rowIndex % 2 === 0 ? 'bg-slate-50 border-slate-100' : 'bg-white border-slate-100'))
                                         },
-                                            React.createElement('td', { className: 'p-3 font-bold text-slate-700 sticky left-0 z-10 ' + (rowIndex % 2 === 0 ? 'bg-slate-50' : 'bg-white') }, rpe),
-                                            ...values.map((pct, idx) =>
+                                            React.createElement('td', { 
+                                                className: 'p-3 font-bold sticky left-0 z-10 ' + 
+                                                    (isDark 
+                                                        ? (rowIndex % 2 === 0 ? 'bg-slate-800/50' : 'bg-slate-800')
+                                                        : (rowIndex % 2 === 0 ? 'bg-slate-50' : 'bg-white'))
+                                            },
+                                                React.createElement('span', { className: 'inline-block px-2 py-1 rounded font-bold ' + getRPEColor(row.rpe, isDark) }, row.rpe)
+                                            ),
+                                            ...row.values.map((pct, idx) =>
                                                 React.createElement('td', { key: idx, className: 'p-3 text-center' },
                                                     React.createElement('div', null,
-                                                        React.createElement('div', { className: 'font-bold text-slate-800' }, (oneRM * pct / 100).toFixed(1)),
-                                                        React.createElement('div', { className: 'text-[8px] text-slate-400' }, pct + '%')
+                                                        React.createElement('div', { className: 'font-bold ' + textPrimary }, (oneRM * pct / 100).toFixed(1)),
+                                                        React.createElement('div', { className: 'text-[8px] ' + textSecondary }, pct + '%')
                                                     )
                                                 )
                                             )
@@ -374,19 +470,36 @@ html_code = """
 
         function App() {
             const [currentTool, setCurrentTool] = useState('checklist');
+            const [isDark, setIsDark] = useState(false);
 
-            return React.createElement('div', { className: 'min-h-screen bg-white' },
+            useEffect(() => {
+                const checkDarkMode = () => {
+                    const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    setIsDark(darkMode);
+                };
+                
+                checkDarkMode();
+                const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                mediaQuery.addEventListener('change', checkDarkMode);
+                
+                return () => mediaQuery.removeEventListener('change', checkDarkMode);
+            }, []);
+
+            return React.createElement('div', { className: 'min-h-screen transition-colors ' + (isDark ? 'bg-slate-900' : 'bg-white') },
                 React.createElement('div', { className: 'max-w-md mx-auto p-4 pt-6' },
                     React.createElement('select', {
                         value: currentTool,
                         onChange: (e) => setCurrentTool(e.target.value),
-                        className: 'w-full p-4 text-sm font-bold text-slate-800 bg-white rounded-2xl border-2 border-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 cursor-pointer transition-all'
+                        className: 'w-full p-4 text-sm font-bold rounded-2xl border-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 cursor-pointer transition-all ' + 
+                            (isDark 
+                                ? 'bg-slate-800 text-slate-100 border-slate-700' 
+                                : 'text-slate-800 bg-white border-slate-200')
                     },
                         React.createElement('option', { value: 'checklist' }, '📋 Competition Ready Checklist'),
                         React.createElement('option', { value: '1rm' }, '💪 Calculateur 1RM')
                     )
                 ),
-                currentTool === 'checklist' ? React.createElement(ChecklistApp) : React.createElement(OneRMCalculator)
+                currentTool === 'checklist' ? React.createElement(ChecklistApp, { isDark }) : React.createElement(OneRMCalculator, { isDark })
             );
         }
 
