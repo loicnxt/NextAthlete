@@ -423,7 +423,7 @@ html_code = """
                         React.createElement('label', { className: 'block text-[9px] font-black text-red-500 uppercase mb-2' }, "Type d'exercice"),
                         React.createElement('div', { className: 'flex gap-2' },
                             ['weights', 'bodyweight', 'pushups'].map(type => {
-                                const labels = { weights: 'Poids libres/Machine', bodyweight: 'Exercice PDC', pushups: 'Pompes' };
+                                const labels = { weights: 'Poids libres/Machine', bodyweight: 'Exercices avec PDC', pushups: 'Pompes' };
                                 return React.createElement('button', {
                                     key: type,
                                     onClick: () => setExerciseType(type),
