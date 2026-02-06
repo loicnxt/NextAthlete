@@ -3,7 +3,7 @@ import streamlit.components.v1 as components
 
 # Configuration de la page Streamlit
 st.set_page_config(
-    page_title="NAPS Tools", 
+    page_title="Next Athlete Tools", 
     layout="centered", 
     initial_sidebar_state="collapsed"
 )
