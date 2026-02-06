@@ -50,6 +50,7 @@ html_code = """
             brain: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M15.5 13a3.5 3.5 0 0 0 -3.5 3.5v1a3.5 3.5 0 0 0 7 0v-1.8" /><path d="M8.5 13a3.5 3.5 0 0 1 3.5 3.5v1a3.5 3.5 0 0 1 -7 0v-1.8" /><path d="M17.5 16a3.5 3.5 0 0 0 0 -7h-.5" /><path d="M19 9.3v-2.8a3.5 3.5 0 0 0 -7 0" /><path d="M6.5 16a3.5 3.5 0 0 1 0 -7h.5" /><path d="M5 9.3v-2.8a3.5 3.5 0 0 1 7 0v10" /></svg>`
         };
 
+        // Structure des données (exactement comme ton React original)
         const sections = [
             {
                 title: "Phase 1 : J-14 à J-7",
@@ -76,9 +77,91 @@ html_code = """
                     {
                         name: "Nutrition & Hydratation",
                         items: [
-                            { id: "beet", label: "Charge de Jus de Betterave", time: "J-6 à J-1", details: "70-140 ml/jour pour augmenter l'oxyde nitrique.<br>Améliore l'économie de l'effort et l'utilisation de l'ATP Pcr.<br> <span class='text-red-600 font-semibold'>Attention : Éviter bains de bouche antiseptiques.</span>" },
+                            { id: "beet", label: "Charge de Jus de Betterave", time: "J-6 à J-1", details: `70-140 ml/jour pour augmenter l'oxyde nitrique.<br>Améliore l'économie de l'effort et l'utilisation de l'ATP Pcr.<br> <span class="text-red-600 font-semibold">Attention : Éviter bains de bouche antiseptiques.</span>` },
                             { id: "sodium", label: "Hyperhydratation sodée", time: "J-3 à J-1", details: "Bois de l'eau riche en sodium ou ajoute des électrolytes à ton hydratation si tu ne le fais pas quotidiennement." },
-                            { id: "residues", label: "Régime sans résidus", time: "J-2", details: "<div class='space-y-4'><p>Élimine les fibres (légumes crus, grains entiers) pour vider le tractus intestinal. Cela évite les troubles digestifs et peut te faire gagner 500g à 1kg sur la balance ('poids mort' intestinal).</p></div>" },
+                            { id: "residues", label: "Régime sans résidus", time: "J-2", details: `
+<div class="space-y-4">
+    <p>
+        Élimine les fibres (légumes crus, grains entiers) pour vider le tractus intestinal. Cela évite les troubles digestifs et peut te faire gagner 500g à 1kg sur la balance ("poids mort" intestinal).
+    </p>
+    <div class="rounded-lg border border-slate-200 overflow-hidden">
+        <table class="w-full text-[10px] text-left border-collapse">
+            <thead>
+                <tr class="bg-red-50 text-red-800 border-b border-red-100">
+                    <th class="p-2 font-bold w-1/3">Catégorie (Stop)</th>
+                    <th class="p-2 font-bold">Exemples</th>
+                    <th class="p-2 font-bold">Pourquoi stopper</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Fibres insolubles</td>
+                    <td class="p-2 text-slate-600">Légumes crus (brocoli, chou), graines, pain complet</td>
+                    <td class="p-2 text-slate-500">↑ volume, ↑ fermentation → ballonnements</td>
+                </tr>
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Légumineuses</td>
+                    <td class="p-2 text-slate-600">Lentilles, pois chiches, haricots</td>
+                    <td class="p-2 text-slate-500">↑ gaz + digestion lente</td>
+                </tr>
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Céréales complètes</td>
+                    <td class="p-2 text-slate-600">Riz complet, quinoa, avoine complet</td>
+                    <td class="p-2 text-slate-500">↑ fibre insoluble → contenu intestinal élevé</td>
+                </tr>
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Fruits riches en fibres</td>
+                    <td class="p-2 text-slate-600">Framboises, poires, pommes avec peau</td>
+                    <td class="p-2 text-slate-500">↑ fibre insoluble, fermentation</td>
+                </tr>
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Noix / fruits secs</td>
+                    <td class="p-2 text-slate-600">Amandes, noix, pruneaux</td>
+                    <td class="p-2 text-slate-500">Gras ralentit vidange, difficile à digérer</td>
+                </tr>
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Boissons gazeuses</td>
+                    <td class="p-2 text-slate-600">Soda, eau gazeuse</td>
+                    <td class="p-2 text-slate-500">Ballonnements, CO₂</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="rounded-lg border border-slate-200 overflow-hidden">
+        <table class="w-full text-[10px] text-left border-collapse">
+            <thead>
+                <tr class="bg-green-50 text-green-800 border-b border-green-100">
+                    <th class="p-2 font-bold w-1/3">Objectif (Go)</th>
+                    <th class="p-2 font-bold">Aliments recommandés</th>
+                    <th class="p-2 font-bold">Notes pratiques</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Glucides digestibles</td>
+                    <td class="p-2 text-slate-600">Riz blanc, pâtes blanches, pomme de terre, banane mûre</td>
+                    <td class="p-2 text-slate-500">Maintient glycogène → énergie intacte</td>
+                </tr>
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Protéines faciles</td>
+                    <td class="p-2 text-slate-600">Blanc de poulet, dinde, œufs, whey</td>
+                    <td class="p-2 text-slate-500">Pas de fibre → digestion rapide</td>
+                </tr>
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Lipides</td>
+                    <td class="p-2 text-slate-600">Très modérés (huile d'olive crue)</td>
+                    <td class="p-2 text-slate-500">Légers pour le repas, pas de friture</td>
+                </tr>
+                <tr class="border-b border-slate-100">
+                    <td class="p-2 font-bold text-slate-700">Liquides & sodium</td>
+                    <td class="p-2 text-slate-600">Eau plate, Vichy plate, bouillon</td>
+                    <td class="p-2 text-slate-500">Maintien hydratation et sodium</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+` },
                             { id: "carbs", label: "Augmentation Glucidique Contrôlée", time: "J-1", details: "Cible : 4-5g de glucides / kg de PDC, à répartir sur la journée.<br>Dernier gros apport ≥6 h avant coucher." }
                         ]
                     },
@@ -86,7 +169,7 @@ html_code = """
                         name: "Suppléments & Logistique",
                         items: [
                             { id: "caf_reset", label: "Arrêt de la Caféine", time: "J-7 à J-2", details: "Se sevrer une semaine avant pour resensibiliser les récepteurs.<br>Ajustement recommandé si grand consommateur de café pour éviter les troubles : Réduire à ≤50 mg/j, pas arrêt total." },
-                            { id: "creatine", label: "Maintien Créatine et Beta-Alanine", time: "Quotidien", details: "Si tu en prends déjà, maintenir la dose de croisière.<br><span class='text-red-600 font-semibold'>Ne commence surtout pas maintenant si tu n'en consommes pas.</span>" },
+                            { id: "creatine", label: "Maintien Créatine et Beta-Alanine", time: "Quotidien", details: `Si tu en prends déjà, maintenir la dose de croisière.<br><span class="text-red-600 font-semibold">Ne commence surtout pas maintenant si tu n'en consommes pas.</span>` },
                             { id: "gear", label: "Check-up Matériel", time: "J-1", details: "Chaussures, straps, nutrition glucidique, électrolytes.<br>Rien de nouveau le jour de la compétition." }
                         ]
                     }
@@ -110,7 +193,7 @@ html_code = """
                         name: "Échauffement (Warm-up)",
                         items: [
                             { id: "racs", label: "RACs Full-Body", time: "H-30m", details: "Échauffement articulaire complet." },
-                            { id: "pap_cap", label: "PAP Capsulaire", time: "H-15m", details: "Effort max sur contraction PAILs (Flexion d'épaule et Rotation externe d'épaule + fonction spécifique).<br><span class='text-red-600 font-semibold'>Attention : Volume minimal pour ne pas cramer le système nerveux.</span>" },
+                            { id: "pap_cap", label: "PAP Capsulaire", time: "H-15m", details: `Effort max sur contraction PAILs (Flexion d'épaule et Rotation externe d'épaule + fonction spécifique).<br><span class="text-red-600 font-semibold">Attention : Volume minimal pour ne pas cramer le système nerveux.</span>` },
                             { id: "plio", label: "Pliométrie extensive", time: "H-10m", details: "Volume sans aller à la fatigue sur des sauts d'intensité basse/moyenne." },
                             { id: "pap", label: "PAP Musculaire, Sprints et sauts", time: "H-5m", details: "Intensité max, volume bas." },
                             { id: "vest", label: "Veste thermique", time: "Départ", details: "Garder le corps au chaud jusqu'au signal." }
@@ -128,17 +211,17 @@ html_code = """
                         name: "Protocole Entre 2 Runs",
                         items: [
                             { id: "recov", label: "Récupération Active", time: "H + 2m", details: "Marche active. Ne t'assois pas.<br>Respire par le nez pour faire redescendre le rythme cardiaque." },
-                            { id: "hydrat", label: "Hydratation", time: "H + 5m", details: "Bois 200-300ml d'eau avec des électrolytes.<br>Si tu n'en as pas, une eau minérale type Vichy Célestins est parfaite.<br><span class='text-red-600 font-semibold'>Attention pour la Vichy si estomac sensible.</span>" },
+                            { id: "hydrat", label: "Hydratation", time: "H + 5m", details: `Bois 200-300ml d'eau avec des électrolytes.<br>Si tu n'en as pas, une eau minérale type Vichy Célestins est parfaite.<br><span class="text-red-600 font-semibold">Attention pour la Vichy si estomac sensible.` },
                             { id: "refuel", label: "Apport Énergie", time: "H + 10m", details: "Si tu te sens vide : Une demi-banane ou une petite gorgée de miel dilué avec de l'eau.<br>Si tu te sens bien : Ne mange rien de solide." },
                             { id: "rinse", label: "Relance", time: "H - 5m", details: "Un dernier rinçage de bouche avec une boisson sucrée (dilué à l'eau), puis recrache si possible.<br>Remets-toi en mouvement (petits sauts, rotations articulaires)." }
                         ]
                     },
-                    {
+                     {
                         name: "Mental In-Game",
                         items: [
                             { id: "selftalk", label: "Self-Talk Positif", time: "Pendant", details: "Dialogue interne instructif.<br>Focus sur les consignes techniques et l'instant présent plutôt que sur le résultat final." }
                         ]
-                    }
+                    },
                 ]
             }
         ];
