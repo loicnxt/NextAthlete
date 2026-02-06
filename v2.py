@@ -26,6 +26,45 @@ html_code = """
             transition: background-color 0.3s ease;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
+/* ====== Résidus : adaptation dark mode ====== */
+@media (prefers-color-scheme: dark) {
+  /* container */
+  .residues-table {
+    background-color: transparent;            /* laisse la carte sombre du reste */
+    border-color: #334155;                    /* slate-700 */
+  }
+
+  /* headings (ligne thead) */
+  .residues-table thead tr {
+    background-color: rgba(255,255,255,0.03); /* léger overlay */
+    color: #fca5a5;                           /* teinte claire pour titres rouges */
+  }
+
+  /* cellules de head qui avaient des classes bg-red-50 / bg-green-50 */
+  .residues-table thead .bg-red-50 { background-color: rgba(220,38,38,0.08) !important; color: #fecaca !important; }
+  .residues-table thead .bg-green-50 { background-color: rgba(16,185,129,0.06) !important; color: #bbf7d0 !important; }
+
+  /* lignes du tbody (remplace les bg-white) */
+  .residues-table tbody tr,
+  .residues-table tbody tr.bg-white {
+    background-color: transparent !important;
+    border-color: #1f2937; /* slate-800 */
+  }
+
+  /* cellules / textes */
+  .residues-table td, .residues-table th {
+    color: #cbd5e1;       /* text-slate-300 equivalent */
+    border-color: #111827;/* subtle row separators */
+  }
+
+  /* petites variantes textuelles déjà utilisées dans le HTML */
+  .residues-table .text-slate-600 { color: #9ca3af !important; } /* muted */
+  .residues-table .text-slate-500 { color: #6b7280 !important; }
+  .residues-table .text-slate-700 { color: #cbd5e1 !important; }
+  .residues-table .text-red-800 { color: #fecaca !important; }
+  .residues-table .text-slate-400 { color: #9ca3af !important; }
+}
+
         
         @media (prefers-color-scheme: dark) {
             body {
@@ -84,7 +123,7 @@ html_code = """
     <p>
         Élimine les fibres (légumes crus, grains entiers) pour vider le tractus intestinal. Cela évite les troubles digestifs et peut te faire gagner 500g à 1kg sur la balance ("poids mort" intestinal).
     </p>
-    <div class="rounded-lg border border-slate-200 overflow-hidden">
+    <div class="rounded-lg border border-slate-200 overflow-hidden residues-table">
         <table class="w-full text-[10px] text-left border-collapse">
             <thead>
                 <tr class="bg-red-50 text-red-800 border-b border-red-100">
