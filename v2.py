@@ -29,7 +29,7 @@ html_code = """
         
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #0e1117;
+                background-color: #0f172a;
             }
         }
     </style>
@@ -485,7 +485,7 @@ html_code = """
                 return () => mediaQuery.removeEventListener('change', checkDarkMode);
             }, []);
 
-            return React.createElement('div', { className: 'min-h-screen transition-colors ' + (isDark ? 'bg-slate-900' : 'bg-white') },
+            return React.createElement('div', { className: 'min-h-screen transition-colors ' + (isDark ? '#0e1117' : 'bg-white') },
                 React.createElement('div', { className: 'max-w-md mx-auto p-4 pt-6' },
                     React.createElement('select', {
                         value: currentTool,
