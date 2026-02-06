@@ -578,8 +578,8 @@ html_code = """
                                 ? 'bg-slate-800 text-slate-100 border-slate-700' 
                                 : 'text-slate-800 bg-white border-slate-200')
                     },
-                        React.createElement('option', { value: 'checklist' }, '📋 Competition Ready Checklist'),
-                        React.createElement('option', { value: '1rm' }, '💪 Calculateur 1RM')
+                        React.createElement('option', { value: 'checklist' }, 'COMPETITION READY CHECKLIST'),
+                        React.createElement('option', { value: '1rm' }, 'CALCULATEUR 1RM')
                     )
                 ),
                 currentTool === 'checklist' ? React.createElement(ChecklistApp, { isDark }) : React.createElement(OneRMCalculator, { isDark })
