@@ -26,43 +26,49 @@ html_code = """
             transition: background-color 0.3s ease;
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-/* ====== Résidus : adaptation dark mode ====== */
+/* ====== Résidus : dark mode strict ====== */
 @media (prefers-color-scheme: dark) {
-  /* container */
+
+  /* Fond global du tableau */
   .residues-table {
-    background-color: transparent;            /* laisse la carte sombre du reste */
-    border-color: #334155;                    /* slate-700 */
+    background-color: #1e293b; /* slate-800 */
+    border-color: #334155;     /* slate-700 */
   }
 
-  /* headings (ligne thead) */
-  .residues-table thead tr {
-    background-color: rgba(255,255,255,0.03); /* léger overlay */
-    color: #fca5a5;                           /* teinte claire pour titres rouges */
+  /* Table */
+  .residues-table table {
+    background-color: #1e293b;
   }
 
-  /* cellules de head qui avaient des classes bg-red-50 / bg-green-50 */
-  .residues-table thead .bg-red-50 { background-color: rgba(220,38,38,0.08) !important; color: #fecaca !important; }
-  .residues-table thead .bg-green-50 { background-color: rgba(16,185,129,0.06) !important; color: #bbf7d0 !important; }
-
-  /* lignes du tbody (remplace les bg-white) */
-  .residues-table tbody tr,
-  .residues-table tbody tr.bg-white {
-    background-color: transparent !important;
-    border-color: #1f2937; /* slate-800 */
+  /* Première ligne : on garde rouge / vert */
+  .residues-table thead .bg-red-50 {
+    background-color: #7f1d1d !important; /* rouge foncé */
+    color: #ffffff !important;
   }
 
-  /* cellules / textes */
-  .residues-table td, .residues-table th {
-    color: #cbd5e1;       /* text-slate-300 equivalent */
-    border-color: #111827;/* subtle row separators */
+  .residues-table thead .bg-green-50 {
+    background-color: #064e3b !important; /* vert foncé */
+    color: #ffffff !important;
   }
 
-  /* petites variantes textuelles déjà utilisées dans le HTML */
-  .residues-table .text-slate-600 { color: #9ca3af !important; } /* muted */
-  .residues-table .text-slate-500 { color: #6b7280 !important; }
-  .residues-table .text-slate-700 { color: #cbd5e1 !important; }
-  .residues-table .text-red-800 { color: #fecaca !important; }
-  .residues-table .text-slate-400 { color: #9ca3af !important; }
+  /* Corps du tableau */
+  .residues-table tbody tr {
+    background-color: #1e293b !important;
+    border-color: #334155;
+  }
+
+  /* Tout le texte en blanc */
+  .residues-table td,
+  .residues-table th,
+  .residues-table p,
+  .residues-table span {
+    color: #ffffff !important;
+  }
+
+  /* Séparateurs */
+  .residues-table tr {
+    border-color: #334155 !important;
+  }
 }
 
         
@@ -166,7 +172,7 @@ html_code = """
             </tbody>
         </table>
     </div>
-    <div class="rounded-lg border border-slate-200 overflow-hidden">
+    <div class="rounded-lg border border-slate-200 overflow-hidden residues-table">
         <table class="w-full text-[10px] text-left border-collapse">
             <thead>
                 <tr class="bg-green-50 text-green-800 border-b border-green-100">
