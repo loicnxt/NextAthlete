@@ -29,7 +29,7 @@ html_code = """
         
         @media (prefers-color-scheme: dark) {
             body {
-                background-color: #0f172a;
+                background-color: #0e1117;
             }
         }
     </style>
